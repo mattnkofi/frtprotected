@@ -34,7 +34,7 @@
         </div>
 
         <div
-            class="relative z-10 w-full max-w-md rounded-3xl backdrop-blur-xl bg-white/80 dark:bg-abyss-800/80 border border-white/20 dark:border-abyss-700 p-8 shadow-2xl animate-in fade-in zoom-in duration-500">
+            class="relative z-10 w-full max-w-md rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-abyss-800/80 border border-white/20 dark:border-abyss-700 p-8 animate-in fade-in zoom-in duration-500">
 
             <div class="mb-8">
                 <div
@@ -49,23 +49,24 @@
                 <h1 class="text-3xl font-bold font-heading text-abyss-900 dark:text-platinum-50">Verify your email</h1>
                 <p class="text-sm text-platinum-600 dark:text-platinum-400 mt-3 leading-relaxed">
                     We sent a verification link to
-                    <span class="font-bold text-calm-lavender-600 dark:text-calm-lavender-400">{{ model.email || 
-                    "your email" }}</span>.
+                    <span class="font-bold text-calm-lavender-600 dark:text-calm-lavender-400">{{ model.email ||
+                        "your email" }}</span>.
                     Please check your inbox to continue.
                 </p>
             </div>
 
             <form @submit.prevent="onResend" class="space-y-5">
                 <div>
-                    <label
-                        class="block text-xs font-bold uppercase tracking-wider mb-2 text-abyss-900 dark:text-platinum-100 opacity-70">
+                    <label class="block text-sm font-medium text-abyss-900 tracking-wider mb-2 dark:text-platinum-100">
                         Email Address
                     </label>
-                    <input v-model.trim="model.email" type="email" inputmode="email" autocomplete="email" class="w-full px-4 py-3 rounded-xl border border-platinum-300 dark:border-abyss-600 
-                   bg-platinum-50/50 dark:bg-abyss-900/50 text-abyss-900 dark:text-platinum-50
-                   placeholder-platinum-400 dark:placeholder-platinum-500
-                   focus:outline-none focus:ring-2 focus:ring-calm-lavender-500/50 focus:border-calm-lavender-500
-                   transition-all duration-200" :disabled="isLoading || cooldown > 0" placeholder="name@example.com" />
+
+                    <input v-model.trim="model.email" type="email" inputmode="email" autocomplete="email" class="w-full px-4 py-3 rounded-lg border border-platinum-300 dark:border-abyss-400 
+                                   bg-platinum-50 dark:bg-abyss-700/50 text-abyss-900 dark:text-platinum-50
+                                   placeholder-platinum-400 dark:placeholder-platinum-500
+                                   focus:outline-none focus:ring-2 focus:ring-calm-lavender-500/50 focus:border-calm-lavender-500
+                                   transition-all duration-200" :disabled="isLoading || cooldown > 0"
+                        placeholder="name@example.com" />
                     <p v-if="errs.email" class="mt-1.5 text-xs font-medium text-neon-pink-500">{{ errs.email }}</p>
                 </div>
 
@@ -73,7 +74,7 @@
                     <button type="submit"
                         class="w-full inline-flex items-center justify-center rounded-xl px-6 py-3.5 font-bold text-white
                    bg-calm-lavender-600 hover:bg-calm-lavender-700 disabled:opacity-50 disabled:cursor-not-allowed 
-                   focus:ring-4 focus:ring-calm-lavender-500/30 transition-all duration-200 shadow-lg shadow-calm-lavender-500/20"
+                   focus:ring-4 focus:ring-calm-lavender-500/30 transition-all duration-200"
                         :disabled="isLoading || !isValidEmail || cooldown > 0">
                         <span v-if="!isLoading && cooldown === 0">Resend Verification</span>
                         <span v-else-if="cooldown > 0">Resend in {{ cooldown }}s</span>
@@ -94,15 +95,15 @@
                         :disabled="isLoading" @click="refreshFromQuery">
                         Reload URL
                     </button>
-                </div>
+                </div> 
             </form>
 
             <div
-                class="mt-8 flex items-center justify-between text-xs font-bold uppercase tracking-widest border-t border-platinum-200 dark:border-abyss-700 pt-6">
+                class="mt-8 flex items-center justify-between text-xs font-normal tracking-wide border-t border-platinum-200 dark:border-abyss-700 pt-6">
                 <router-link
                     class="text-platinum-600 dark:text-platinum-400 hover:text-calm-lavender-600 transition-colors"
                     :to="{ name: 'login' }">
-                    &larr; Sign In
+                    Sign In
                 </router-link>
                 <router-link
                     class="text-platinum-600 dark:text-platinum-400 hover:text-calm-lavender-600 transition-colors"

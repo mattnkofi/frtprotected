@@ -10,7 +10,7 @@
                 </p>
             </div>
 
-            <div class="bg-platinum-50 dark:bg-abyss-900 transition-colors duration-300">
+            <div class="transition-colors duration-300">
                 <form @submit.prevent="submit" class="space-y-5">
                     <div class="space-y-1.5">
                         <label class="block text-sm font-medium text-abyss-900 dark:text-platinum-100">Email
@@ -66,8 +66,8 @@
 
                 <div class="mt-8 text-center border-t border-platinum-200 dark:border-abyss-700 pt-6">
                     <router-link :to="{ name: 'login' }"
-                        class="text-sm font-bold text-calm-lavender-600 dark:text-calm-lavender-400 hover:text-neon-pink-500 transition-all uppercase tracking-widest">
-                        &larr; Back to login
+                        class="text-sm font-semibold tracking-wide text-calm-lavender-600 dark:text-calm-lavender-400 hover:text-neon-pink-500 transition-all">
+                        Back to login
                     </router-link>
                 </div>
             </div>

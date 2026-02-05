@@ -27,7 +27,8 @@ const publicRoutes = [
                 path: 'verify-email',
                 name: 'verify-email',
                 component: () => import('@views/auth/VerifyEmail.vue'),
-                meta: { title: 'Verifying Email...' }
+                meta: { title: 'Verifying Email...' },
+                alias: ['/verify-email']
             },
         ],
     },

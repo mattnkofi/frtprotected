@@ -20,7 +20,7 @@
         </div>
 
         <div
-            class="relative z-10 max-w-sm w-full text-center p-10 rounded-3xl backdrop-blur-xl bg-white/80 dark:bg-abyss-800/80 border border-white/20 dark:border-abyss-700 animate-in fade-in zoom-in">
+            class="relative z-10 max-w-sm w-full text-center p-10 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-abyss-800/80 border border-white/20 dark:border-abyss-700 animate-in fade-in zoom-in">
 
             <div v-if="!error" class="space-y-6">
                 <div class="relative mx-auto h-16 w-16">

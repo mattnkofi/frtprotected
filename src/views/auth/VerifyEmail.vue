@@ -34,7 +34,7 @@
         </div>
 
         <div
-            class="relative z-10 max-w-md w-full text-center p-10 rounded-3xl shadow-2xl backdrop-blur-xl bg-white/80 dark:bg-abyss-800/80 border border-white/20 dark:border-abyss-700 animate-in fade-in zoom-in duration-500">
+            class="relative z-10 max-w-md w-full text-center p-10 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-abyss-800/80 border border-white/20 dark:border-abyss-700 animate-in fade-in zoom-in duration-500">
 
             <div v-if="status === 'loading'">
                 <div class="relative mx-auto h-16 w-16 mb-6">
@@ -59,7 +59,7 @@
                 <p class="text-platinum-600 dark:text-platinum-400 mb-8 leading-relaxed">Your email is confirmed. You
                     can now access your intelligent document vault.</p>
                 <router-link :to="{ name: 'login' }"
-                    class="w-full inline-flex items-center justify-center py-3.5 px-6 bg-calm-lavender-600 text-white font-bold rounded-xl hover:bg-calm-lavender-700 focus:ring-4 focus:ring-calm-lavender-500/30 transition-all shadow-lg hover:shadow-calm-lavender-500/20">
+                    class="w-full inline-flex items-center justify-center py-3.5 px-6 bg-calm-lavender-600 text-white font-semi-bold rounded-xl hover:bg-calm-lavender-700 focus:ring-4 focus:ring-calm-lavender-500/30 transition-all shadow-lg hover:shadow-calm-lavender-500/20">
                     Sign In
                 </router-link>
             </div>
@@ -76,12 +76,14 @@
                 </h2>
                 <p class="text-platinum-600 dark:text-platinum-400 mb-8">{{ errorMessage }}</p>
                 <div class="flex flex-col gap-4">
-                    <router-link :to="{ name: 'verify-notice' }"
-                        class="w-full py-3.5 bg-azure-blue-600 text-white font-bold rounded-xl hover:bg-azure-blue-700 transition-all shadow-lg hover:shadow-azure-blue-500/20">
+                    <router-link :to="{ name: 'verify-notice' }" class="w-full py-3.5 px-4 bg-calm-lavender-600 text-white font-bold rounded-lg 
+                   hover:bg-calm-lavender-700 focus:ring-4 focus:ring-calm-lavender-500/30
+                   disabled:opacity-50 disabled:cursor-not-allowed
+                   transition-all duration-200 border border-calm-lavender-700 flex items-center justify-center gap-2">
                         Resend Link
                     </router-link>
                     <router-link :to="{ name: 'login' }"
-                        class="text-sm font-bold text-calm-lavender-600 dark:text-calm-lavender-400 hover:text-neon-pink-500 transition-colors">
+                        class="text-sm font-semibold tracking-wide text-calm-lavender-600 dark:text-calm-lavender-400 hover:text-neon-pink-500 transition-colors">
                         Back to Sign In
                     </router-link>
                 </div>

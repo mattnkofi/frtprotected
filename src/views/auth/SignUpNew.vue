@@ -127,7 +127,8 @@
             <!-- Footer -->
             <p class="mt-8 text-center text-sm text-platinum-600 dark:text-platinum-400">
                 Already have an account?
-                <router-link :to="{ name: 'login' }" class="text-neon-pink-600 font-semibold hover:underline">
+                <router-link :to="{ name: 'login' }"
+                    class="text-neon-pink-600 dark:text-neon-pink-400 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
                     Sign in
                 </router-link>
             </p>
