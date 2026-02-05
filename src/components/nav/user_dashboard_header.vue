@@ -35,15 +35,16 @@
                 </div>
 
                 <!-- Right: quick actions -->
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <router-link :to="{ name: 'home' }" class="hidden sm:inline-block px-3 py-2 text-sm rounded-full
-                    bg-advocacy-purple-600 hover:bg-advocacy-purple-700 text-white font-medium transition">
-                        Start Learning
-                    </router-link>
-
-                    <!-- Profile dropdown moved out as its own component -->
+                <!-- Profile dropdown (mobile only) -->
+                <div class="md:hidden">
                     <ProfileDropdown />
                 </div>
+
+                <!-- Start Learning button (desktop only) -->
+                <router-link :to="{ name: 'home' }" class="hidden md:inline-block px-3 py-2 text-sm rounded-full
+                bg-advocacy-purple-600 hover:bg-advocacy-purple-700 text-white font-medium transition">
+                    Start Learning
+                </router-link>
             </div>
         </div>
     </header>

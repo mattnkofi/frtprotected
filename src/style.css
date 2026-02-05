@@ -18,7 +18,7 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-ThinItalic.ttf") format("truetype");
   font-weight: 100;
-  font-style: italic;
+  font-style: thin-italic;
   font-display: swap;
 }
 
@@ -27,7 +27,7 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-ExtraLight.ttf") format("truetype");
   font-weight: 200;
-  font-style: normal;
+  font-style: extra-light;
   font-display: swap;
 }
 /* ... Poppins ExtraLight Italic (200) ... */
@@ -37,7 +37,7 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-Light.ttf") format("truetype");
   font-weight: 300;
-  font-style: normal;
+  font-style: light;
   font-display: swap;
 }
 /* ... Poppins Light Italic (300) ... */
@@ -73,7 +73,7 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-SemiBold.ttf") format("truetype");
   font-weight: 600;
-  font-style: normal;
+  font-style: semibold;
   font-display: swap;
 }
 /* ... Poppins SemiBold Italic (600) ... */
@@ -83,14 +83,14 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-Bold.ttf") format("truetype");
   font-weight: 700;
-  font-style: normal;
+  font-style: bold;
   font-display: swap;
 }
 @font-face {
   font-family: "Poppins";
   src: url("/fonts/Poppins-BoldItalic.ttf") format("truetype");
   font-weight: 700;
-  font-style: italic;
+  font-style: bold-italic;
   font-display: swap;
 }
 
@@ -99,7 +99,7 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-ExtraBold.ttf") format("truetype");
   font-weight: 800;
-  font-style: normal;
+  font-style: extra-bold;
   font-display: swap;
 }
 /* ... Poppins ExtraBold Italic (800) ... */
@@ -109,7 +109,7 @@
   font-family: "Poppins";
   src: url("/fonts/Poppins-Black.ttf") format("truetype");
   font-weight: 900;
-  font-style: normal;
+  font-style: black;
   font-display: swap;
 }
 /* ... Poppins Black Italic (900) ... */
@@ -121,7 +121,7 @@
   font-family: "OpenSans";
   src: url("/fonts/OpenSans-Light.ttf") format("truetype");
   font-weight: 300;
-  font-style: normal;
+  font-style: light;
   font-display: swap;
 }
 /* ... continue for all Open Sans weights (300, 400, 500, 600, 700, 800) and their italics ... */
@@ -141,7 +141,7 @@
   font-family: "OpenSans";
   src: url("/fonts/OpenSans-Bold.ttf") format("truetype");
   font-weight: 700;
-  font-style: normal;
+  font-style: bold;
   font-display: swap;
 }
 /* ... Open Sans Bold Italic (700) ... */

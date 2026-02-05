@@ -1,8 +1,8 @@
-<!-- frontend\src\components\nav\home_sidebar.vue -->
 <script setup>
 import { ref, computed, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from '@/utils/api'
+import { useAuthStore } from '@/stores/auth'
 import {
     ClipboardList,
     UserPlus,
@@ -12,24 +12,31 @@ import {
     ChevronRight,
     SquareArrowUpRight,
     Share2,
-    ShieldCheck
+    ShieldCheck,
+    BookOpen,
+    LogOut,
+    User,
+    Users2,
+    AlertCircle,
+    Heart,
+    Handshake,
+    Trophy,
+    MoreVertical
 } from 'lucide-vue-next'
 
 const route = useRoute()
 const router = useRouter()
+const auth = useAuthStore()
 
-/** Props:
- * - isMobileOpen: toggles off-canvas on small screens
- * - userId: optional current user id
- */
 const props = defineProps({
     isMobileOpen: { type: Boolean, default: false },
     userId: { type: [String, Number, null], default: null },
+    orgId: { type: [String, Number, null], default: null },
 })
 const emit = defineEmits(['close-mobile-sidebar', 'expanded-change'])
 
-/* ------- responsive + mode ------- */
 const expanded = ref(false)
+const profileMenuOpen = ref(false)
 const width = ref(typeof window !== 'undefined' ? window.innerWidth : 1024)
 const isMobile = computed(() => width.value < 768)
 
@@ -42,14 +49,11 @@ const isMobileShown = computed(() => mode.value === 'mobile-full')
 const isIcon = computed(() => mode.value === 'icon')
 const isFull = computed(() => mode.value === 'full')
 
-watchEffect(() => emit('expanded-change', isFull.value))
-
-/* ------- learning modules data ------- */
 const modules = ref([
-    { id: 1, name: 'Gender & Power', icon: '👥', progress: 65, status: 'in-progress' },
-    { id: 2, name: 'Recognizing VAWC', icon: '🚨', progress: 100, status: 'completed' },
-    { id: 3, name: 'Sexual Health 101', icon: '💚', progress: 40, status: 'in-progress' },
-    { id: 4, name: 'Support Resources', icon: '🤝', progress: 0, status: 'not-started' },
+    { id: 1, name: 'Gender & Power', icon: 'users2', color: 'text-advocacy-purple-600', progress: 65, status: 'in-progress' },
+    { id: 2, name: 'Recognizing VAWC', icon: 'alertCircle', color: 'text-red-500', progress: 100, status: 'completed' },
+    { id: 3, name: 'Sexual Health 101', icon: 'heart', color: 'text-rose-500', progress: 40, status: 'in-progress' },
+    { id: 4, name: 'Support Resources', icon: 'handshake', color: 'text-emerald-600', progress: 0, status: 'not-started' },
 ])
 
 const myLearningPaths = ref([
@@ -58,7 +62,6 @@ const myLearningPaths = ref([
     { id: 3, name: 'GAD Management', progress: 25, modules: 6 },
 ])
 
-/* ------- helpers ------- */
 function goModule(moduleId) {
     router.push({ name: 'module', params: { id: moduleId } })
 }
@@ -78,7 +81,23 @@ function goSettings() {
 function goManageBadges() {
     router.push({ name: 'user.managebadges' })
 }
-/* ------- organizations data ------- */
+
+function goModules() {
+    router.push({ name: 'user.modules' })
+}
+
+function goProfile() {
+    router.push({ name: 'user.settings' })
+}
+
+async function logout() {
+    try {
+        await auth.logout()
+    } finally {
+        router.push({ name: 'login' })
+    }
+}
+
 const mine = ref([])
 const all = ref([])
 const reqs = ref([])
@@ -116,7 +135,6 @@ async function loadReqs() {
     }
 }
 
-/* ------- logo helpers (same behavior as OrgDetail) ------- */
 const R2_WORKER_ENDPOINT = import.meta.env.VITE_R2_WORKER_ENDPOINT || ''
 
 function getOrgLogoUrl(org) {
@@ -125,12 +143,10 @@ function getOrgLogoUrl(org) {
     const path = org.logo
     if (typeof path !== 'string') return ''
 
-    // Already full URL
     if (path.startsWith('http://') || path.startsWith('https://')) {
         return path
     }
 
-    // Use R2 worker endpoint if configured
     if (!R2_WORKER_ENDPOINT) return ''
 
     const cleanEndpoint = R2_WORKER_ENDPOINT.replace(/\/$/, '')
@@ -150,19 +166,16 @@ function getOrgInitials(org) {
 }
 
 function goSharedDocuments() {
-    // If user has a current org, show shared docs for that org
     if (currentId.value) {
         router.push({
             name: 'org.shared-documents',
             params: { id: currentId.value }
         })
     } else {
-        // [FIXED] Go to the new dedicated route instead of query param
         router.push({ name: 'home.shared-documents' })
     }
 }
 
-/* ------- helpers ------- */
 const currentId = computed(() => props.orgId ?? route.params.id ?? null)
 
 function goOrg(id) {
@@ -177,28 +190,32 @@ function goMyRequests() {
     router.push({ name: 'orgs.requests' })
 }
 
-if (typeof window !== 'undefined') {
-    window.addEventListener('resize', () => (width.value = window.innerWidth))
+const windowExists = typeof window !== 'undefined'
+
+const handleResize = () => {
+    width.value = window.innerWidth
+}
+
+if (windowExists) {
+    window.addEventListener('resize', handleResize)
 }
 
 onMounted(() => {
-    loadMine()
-    loadAll()
-    loadReqs()
+    if (windowExists) {
+        loadMine()
+        loadAll()
+        loadReqs()
+    }
 })
+
+watchEffect(() => emit('expanded-change', isFull.value))
 </script>
 
 <template>
-    <Transition 
-        enter-active-class="transition-opacity duration-300"
-        leave-active-class="transition-opacity duration-200" 
-        enter-from-class="opacity-0" 
-        leave-to-class="opacity-0"
-    >
-        <div v-if="isMobileShown" 
-             class="fixed inset-0 z-40 md:hidden bg-abyss-950/60 backdrop-blur-sm"
-             @click="$emit('close-mobile-sidebar')" 
-        />
+    <Transition enter-active-class="transition-opacity duration-300"
+        leave-active-class="transition-opacity duration-200" enter-from-class="opacity-0" leave-to-class="opacity-0">
+        <div v-if="isMobileShown" class="fixed inset-0 z-40 md:hidden bg-abyss-950/60 backdrop-blur-sm"
+            @click="$emit('close-mobile-sidebar')" />
     </Transition>
 
     <aside :class="[
@@ -214,7 +231,8 @@ onMounted(() => {
         <div class="h-full flex flex-col">
             <div v-if="!isMobileShown"
                 class="hidden md:flex items-center justify-between px-4 py-3 border-b border-platinum-100 dark:border-abyss-800">
-                <span v-if="isFull" class="text-[10px] font-black uppercase tracking-[0.2em] text-platinum-400">Navigation</span>
+                <span v-if="isFull"
+                    class="text-[10px] font-black uppercase tracking-[0.2em] text-platinum-400">Navigation</span>
                 <button @click="expanded = !expanded"
                     class="p-1.5 rounded-lg bg-platinum-50 dark:bg-abyss-800 hover:scale-110 transition-all border border-transparent hover:border-kaitoke-green-500/50"
                     :aria-label="isFull ? 'Collapse sidebar' : 'Expand sidebar'">
@@ -224,13 +242,13 @@ onMounted(() => {
             </div>
 
             <nav class="flex-1 px-3 py-6 space-y-8 overflow-y-auto custom-scrollbar">
-                
+
                 <section class="space-y-2">
                     <div v-if="isFull || isMobileShown"
                         class="px-3 mb-4 text-[10px] font-bold uppercase tracking-[0.15em] text-kaitoke-green-600 dark:text-kaitoke-green-400 opacity-70">
                         Active Modules
                     </div>
-                    
+
                     <div class="space-y-1">
                         <button v-for="module in modules" :key="'module-' + module.id" @click="goModule(module.id)"
                             :title="module.name" :class="[
@@ -240,13 +258,28 @@ onMounted(() => {
                                     ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20 shadow-sm'
                                     : 'transparent'
                             ]">
-                            <div v-if="route.params.id == module.id" 
-                                 class="absolute left-0 top-2 bottom-2 w-1 bg-kaitoke-green-500 rounded-r-full shadow-[0_0_10px_rgba(34,197,94,0.6)]">
+                            <div v-if="route.params.id == module.id"
+                                class="absolute left-0 top-2 bottom-2 w-1 bg-kaitoke-green-500 rounded-r-full shadow-[0_0_10px_rgba(34,197,94,0.6)]">
                             </div>
 
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-between']">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <span class="text-xl group-hover:scale-125 transition-transform duration-300">{{ module.icon }}</span>
+                                    <div class="p-2 rounded-lg group-hover:bg-opacity-80 transition-all duration-300 group-hover:scale-110"
+                                        :class="[
+                                            module.icon === 'users2' ? 'bg-advocacy-purple-100 dark:bg-advocacy-purple-900/20' :
+                                                module.icon === 'alertCircle' ? 'bg-red-100 dark:bg-red-900/20' :
+                                                    module.icon === 'heart' ? 'bg-rose-100 dark:bg-rose-900/20' :
+                                                        'bg-emerald-100 dark:bg-emerald-900/20'
+                                        ]">
+                                        <Users2 v-if="module.icon === 'users2'"
+                                            :class="['h-5 w-5 stroke-[1.75]', module.color]" />
+                                        <AlertCircle v-else-if="module.icon === 'alertCircle'"
+                                            :class="['h-5 w-5 stroke-[1.75]', module.color]" />
+                                        <Heart v-else-if="module.icon === 'heart'"
+                                            :class="['h-5 w-5 stroke-[1.75]', module.color]" />
+                                        <Handshake v-else-if="module.icon === 'handshake'"
+                                            :class="['h-5 w-5 stroke-[1.75]', module.color]" />
+                                    </div>
                                     <span v-if="!isIcon" :class="[
                                         'truncate font-heading text-sm tracking-wide transition-colors',
                                         route.params.id == module.id ? 'font-bold text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'font-medium'
@@ -255,7 +288,8 @@ onMounted(() => {
                                     </span>
                                 </div>
                                 <div v-if="!isIcon && module.progress > 0" class="flex flex-col items-end">
-                                    <span class="text-[10px] font-black text-kaitoke-green-600/70">{{ module.progress }}%</span>
+                                    <span class="text-[10px] font-black text-kaitoke-green-600/70">{{ module.progress
+                                        }}%</span>
                                 </div>
                             </div>
                         </button>
@@ -267,109 +301,220 @@ onMounted(() => {
                         class="px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-advocacy-purple-500 dark:text-advocacy-purple-400 opacity-70">
                         Your Journeys
                     </div>
-                    
+
                     <div v-if="!isIcon" class="space-y-3 px-1">
                         <button v-for="path in myLearningPaths" :key="'path-' + path.id" @click="goPath(path.id)"
                             class="w-full text-left group">
-                            <p class="text-xs font-bold text-abyss-800 dark:text-platinum-200 truncate mb-1.5 group-hover:text-kaitoke-green-500 transition-colors">
+                            <p
+                                class="text-xs font-bold text-abyss-800 dark:text-platinum-200 truncate mb-1.5 group-hover:text-kaitoke-green-500 transition-colors">
                                 {{ path.name }}
                             </p>
-                            <div class="relative h-1 w-full bg-platinum-100 dark:bg-abyss-800 rounded-full overflow-hidden">
+                            <div
+                                class="relative h-1 w-full bg-platinum-100 dark:bg-abyss-800 rounded-full overflow-hidden">
                                 <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-kaitoke-green-500 to-emerald-400 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(34,197,94,0.4)]"
                                     :style="{ width: path.progress + '%' }"></div>
                             </div>
                         </button>
                     </div>
                     <div v-else class="flex flex-col items-center gap-4">
-                        <div v-for="path in myLearningPaths" :key="'p-icon-'+path.id" 
-                             class="w-2 h-2 rounded-full bg-kaitoke-green-500/40 border border-kaitoke-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]"></div>
+                        <div v-for="path in myLearningPaths" :key="'p-icon-' + path.id"
+                            class="w-2 h-2 rounded-full bg-kaitoke-green-500/40 border border-kaitoke-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]">
+                        </div>
                     </div>
                 </section>
 
                 <section class="pt-4 border-t border-platinum-100 dark:border-abyss-800">
                     <div class="space-y-1">
-                        <button @click="goLeaderboard()" class="sidebar-btn group">
+                        <button @click="goModules()"
+                            :class="['sidebar-btn group', route.name === 'user.modules' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
-                                <div class="p-2 rounded-lg group-hover:bg-vawc-orange-100 dark:group-hover:bg-vawc-orange-900/20 transition-colors">
-                                    <span class="text-lg">🏆</span>
+                                <div
+                                    class="p-2 rounded-lg group-hover:bg-advocacy-purple-100 dark:group-hover:bg-advocacy-purple-900/20 transition-colors">
+                                    <BookOpen :class="[
+                                        'h-5 w-5 stroke-[1.75] transition-colors',
+                                        route.name === 'user.modules' ? 'text-advocacy-purple-600' : 'text-platinum-500 group-hover:text-advocacy-purple-600'
+                                    ]" />
                                 </div>
-                                <span v-if="!isIcon" class="font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform">Leaderboard</span>
+                                <span v-if="!isIcon" :class="[
+                                    'font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform',
+                                    route.name === 'user.modules' ? 'text-advocacy-purple-700 dark:text-advocacy-purple-300' : 'text-platinum-600 dark:text-platinum-400'
+                                ]">All Modules</span>
                             </div>
                         </button>
 
-<button @click="goManageBadges()" 
-                :class="['sidebar-btn group', route.name === 'user.managebadges' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
-            <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
-                <div class="p-2 rounded-lg group-hover:bg-kaitoke-green-100 dark:group-hover:bg-kaitoke-green-900/30 transition-colors">
-                    <ShieldCheck :class="[
-                        'h-5 w-5 transition-colors',
-                        route.name === 'user.managebadges' ? 'text-kaitoke-green-600' : 'text-platinum-500 group-hover:text-kaitoke-green-600'
-                    ]" />
-                </div>
-                <span v-if="!isIcon" 
-                      :class="[
-                          'font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform',
-                          route.name === 'user.managebadges' ? 'text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'text-platinum-600 dark:text-platinum-400'
-                      ]">
-                    Manage Badges
-                </span>
-            </div>
-        </button>
-
-                        <button @click="goSettings()" class="sidebar-btn group">
+                        <button @click="goLeaderboard()" class="sidebar-btn group">
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
-                                <div class="p-2 rounded-lg group-hover:bg-platinum-100 dark:group-hover:bg-abyss-800 transition-colors">
-                                    <span class="text-lg text-platinum-500">⚙️</span>
+                                <div
+                                    class="p-2 rounded-lg bg-vawc-orange-100 dark:bg-vawc-orange-900/20 group-hover:bg-opacity-80 transition-colors">
+                                    <Trophy
+                                        :class="['h-5 w-5 stroke-[1.75] text-vawc-orange-600 transition-colors', 'group-hover:text-vawc-orange-700']" />
                                 </div>
-                                <span v-if="!isIcon" class="font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform text-platinum-600 dark:text-platinum-400">Settings</span>
+                                <span v-if="!isIcon"
+                                    class="font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform text-platinum-600 dark:text-platinum-400">Leaderboard</span>
+                            </div>
+                        </button>
+
+                        <button @click="goManageBadges()"
+                            :class="['sidebar-btn group', route.name === 'user.managebadges' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
+                            <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
+                                <div
+                                    class="p-2 rounded-lg group-hover:bg-kaitoke-green-100 dark:group-hover:bg-kaitoke-green-900/30 transition-colors">
+                                    <ShieldCheck :class="[
+                                        'h-5 w-5 stroke-[1.75] transition-colors',
+                                        route.name === 'user.managebadges' ? 'text-kaitoke-green-600' : 'text-platinum-500 group-hover:text-kaitoke-green-600'
+                                    ]" />
+                                </div>
+                                <span v-if="!isIcon" :class="[
+                                    'font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform',
+                                    route.name === 'user.managebadges' ? 'text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'text-platinum-600 dark:text-platinum-400'
+                                ]">Manage Badges</span>
                             </div>
                         </button>
                     </div>
                 </section>
             </nav>
 
-            <div v-if="isFull" class="p-4 bg-platinum-50/50 dark:bg-abyss-950/40 mt-auto border-t border-platinum-100 dark:border-abyss-800">
-                 <div class="flex items-center gap-3">
-                     <div class="w-8 h-8 rounded-full bg-kaitoke-green-500 flex items-center justify-center text-[10px] font-bold text-white shadow-lg shadow-kaitoke-green-500/20">
-                         {{ getOrgInitials(mine[0]) || 'U' }}
-                     </div>
-                     <div class="flex-1 min-w-0">
-                         <p class="text-[10px] font-black uppercase tracking-tighter text-abyss-900 dark:text-platinum-100 truncate">System Access</p>
-                         <p class="text-[9px] text-platinum-500 uppercase tracking-widest font-bold">Authenticated</p>
-                     </div>
-                 </div>
+            <!-- Profile Section (Bottom) - Visible in both icon and full mode on desktop -->
+            <div class="hidden md:flex flex-col mt-auto border-t border-platinum-100 dark:border-abyss-800">
+                <!-- Full mode: profile card with clickable menu -->
+                <template v-if="isFull">
+                    <div class="p-4 bg-platinum-50/50 dark:bg-abyss-950/40 relative">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-kaitoke-green-500 to-emerald-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-kaitoke-green-500/20 flex-shrink-0">
+                                    {{ getOrgInitials(mine[0]) || 'U' }}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs font-bold text-abyss-900 dark:text-platinum-100 truncate">You</p>
+                                    <p
+                                        class="text-[10px] text-platinum-500 dark:text-platinum-400 uppercase tracking-wider font-semibold">
+                                        Authenticated</p>
+                                </div>
+                            </div>
+
+                            <!-- Menu button -->
+                            <button @click="profileMenuOpen = !profileMenuOpen"
+                                class="p-1.5 rounded-lg hover:bg-platinum-200/50 dark:hover:bg-abyss-700 transition-colors flex-shrink-0"
+                                aria-label="Profile menu">
+                                <MoreVertical class="h-4 w-4 stroke-[2] text-platinum-500 dark:text-platinum-400" />
+                            </button>
+                        </div>
+
+                        <!-- Dropdown menu -->
+                        <transition name="fade">
+                            <div v-if="profileMenuOpen"
+                                class="absolute top-full right-0 mt-1 w-48 bg-white dark:bg-abyss-800 rounded-lg shadow-lg ring-1 ring-black/10 dark:ring-white/10 z-50 overflow-hidden">
+                                <button @click="goProfile(); profileMenuOpen = false"
+                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
+                                    <User
+                                        class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors" />
+                                    <span
+                                        class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">Profile</span>
+                                </button>
+                                <button @click="goSettings(); profileMenuOpen = false"
+                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
+                                    <Settings
+                                        class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-advocacy-purple-600 transition-colors" />
+                                    <span
+                                        class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-advocacy-purple-600 dark:group-hover:text-advocacy-purple-400 transition-colors">Settings</span>
+                                </button>
+                                <button @click="logout(); profileMenuOpen = false"
+                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors group">
+                                    <LogOut
+                                        class="h-4 w-4 stroke-[1.75] text-red-500 group-hover:text-red-600 transition-colors" />
+                                    <span
+                                        class="font-medium text-red-600 dark:text-red-400 group-hover:text-red-700 transition-colors">Logout</span>
+                                </button>
+                            </div>
+                        </transition>
+                    </div>
+                </template>
+
+                <!-- Icon mode: compact profile with menu button -->
+                <template v-else>
+                    <div class="p-3 bg-platinum-50/50 dark:bg-abyss-950/40 relative flex justify-center">
+                        <div class="relative">
+                            <button @click="profileMenuOpen = !profileMenuOpen"
+                                class="flex justify-center p-2 rounded-lg hover:bg-platinum-100 dark:hover:bg-abyss-800 transition-colors"
+                                aria-label="Profile menu">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-kaitoke-green-500 to-emerald-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-kaitoke-green-500/20 hover:shadow-xl hover:scale-110 transition-all">
+                                    {{ getOrgInitials(mine[0]) || 'U' }}
+                                </div>
+                            </button>
+
+                            <!-- Dropdown menu positioned to the right -->
+                            <transition name="fade">
+                                <div v-if="profileMenuOpen"
+                                    class="absolute top-0 left-full ml-2 w-48 bg-white dark:bg-abyss-800 rounded-lg shadow-lg ring-1 ring-black/10 dark:ring-white/10 z-50 overflow-hidden">
+                                    <button @click="goProfile(); profileMenuOpen = false"
+                                        class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
+                                        <User
+                                            class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors flex-shrink-0" />
+                                        <span
+                                            class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">Profile</span>
+                                    </button>
+                                    <button @click="goSettings(); profileMenuOpen = false"
+                                        class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
+                                        <Settings
+                                            class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-advocacy-purple-600 transition-colors flex-shrink-0" />
+                                        <span
+                                            class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-advocacy-purple-600 dark:group-hover:text-advocacy-purple-400 transition-colors">Settings</span>
+                                    </button>
+                                    <button @click="logout(); profileMenuOpen = false"
+                                        class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors group">
+                                        <LogOut
+                                            class="h-4 w-4 stroke-[1.75] text-red-500 group-hover:text-red-600 transition-colors flex-shrink-0" />
+                                        <span
+                                            class="font-medium text-red-600 dark:text-red-400 group-hover:text-red-700 transition-colors">Logout</span>
+                                    </button>
+                                </div>
+                            </transition>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
     </aside>
 </template>
 
 <style scoped>
-
 @reference "@/style.css";
+
 .sidebar-btn {
     @apply w-full rounded-xl transition-all duration-300 px-1 py-1 text-left hover:bg-platinum-50 dark:hover:bg-abyss-800/50;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-platinum-200 dark:bg-abyss-800 rounded-full;
 }
 
-/* Add a subtle scanline effect in dark mode for that 'futuristic' feel */
 .dark aside::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        transparent 50%,
-        rgba(255, 255, 255, 0.02) 50%
-    );
+    background: linear-gradient(to bottom,
+            transparent 50%,
+            rgba(255, 255, 255, 0.02) 50%);
     background-size: 100% 4px;
     pointer-events: none;
     opacity: 0.3;

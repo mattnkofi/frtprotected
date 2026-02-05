@@ -1,3 +1,4 @@
+// src/router/modules/authenticated.js
 const authenticatedRoutes = [
     {
         path: '/dashboard',
@@ -9,6 +10,12 @@ const authenticatedRoutes = [
                 name: 'user.dashboard',
                 component: () => import('@/views/dashboard/UserDashboard.vue'),
                 meta: { title: 'Dashboard' }
+            },
+            {
+                path: 'modules',
+                name: 'user.modules',
+                component: () => import('@/views/dashboard/Modules.vue'),
+                meta: { title: 'Learning Modules' }
             },
             {
                 path: 'modules/:id',
@@ -38,7 +45,7 @@ const authenticatedRoutes = [
                 path: 'manage-badges',
                 name: 'user.managebadges',
                 component: () => import('@/views/dashboard/ManageBadges.vue'),
-                meta: { title: 'Settings' }
+                meta: { title: 'Manage Badges' }
             },
         ]
     },
