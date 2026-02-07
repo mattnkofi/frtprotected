@@ -32,7 +32,7 @@
                 </select>
 
                 <!-- Type filter -->
-                <select 
+                <!-- <select 
                     v-model="localFilters.type"
                     class="border dark:border-abyss-600 rounded-lg px-4 py-2 bg-white dark:bg-abyss-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     @change="applyFilters"
@@ -43,7 +43,7 @@
                     <option value="activity">Activity</option>
                     <option value="resource">Resource</option>
                     <option value="assessment">Assessment</option>
-                </select>
+                </select> -->
 
                 <!-- Difficulty filter -->
                 <select 
@@ -148,7 +148,7 @@ const moduleStore = useModuleStore();
 const localFilters = ref({
     search: '',
     category: null,
-    type: null,
+    // type: null,
     difficulty_level: null
 });
 
@@ -162,7 +162,7 @@ const activeFiltersDisplay = computed(() => {
     const display = {};
     if (localFilters.value.search) display.search = `Search: "${localFilters.value.search}"`;
     if (localFilters.value.category) display.category = `Category: ${formatLabel(localFilters.value.category)}`;
-    if (localFilters.value.type) display.type = `Type: ${formatLabel(localFilters.value.type)}`;
+    // if (localFilters.value.type) display.type = `Type: ${formatLabel(localFilters.value.type)}`;
     if (localFilters.value.difficulty_level) display.difficulty_level = `Level: ${formatLabel(localFilters.value.difficulty_level)}`;
     return display;
 });
@@ -189,7 +189,7 @@ const resetFilters = async () => {
     localFilters.value = {
         search: '',
         category: null,
-        type: null,
+        // type: null,
         difficulty_level: null
     };
     moduleStore.resetFilters();

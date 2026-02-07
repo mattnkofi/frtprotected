@@ -17,7 +17,7 @@
         <!-- Content -->
         <div class="flex-1 overflow-y-auto p-4 space-y-6">
             <!-- Quick stats -->
-            <div class="grid grid-cols-2 gap-3">
+            <!-- <div class="grid grid-cols-2 gap-3">
                 <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
                     <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ module.points || 0 }}</div>
                     <div class="text-xs text-gray-600 dark:text-gray-400">Points</div>
@@ -26,7 +26,7 @@
                     <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">{{ module.duration_minutes || 0 }}m</div>
                     <div class="text-xs text-gray-600 dark:text-gray-400">Duration</div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Details -->
             <div class="space-y-4">
@@ -37,12 +37,12 @@
                     </span>
                 </div>
 
-                <div>
+                <!-- <div>
                     <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Type</h3>
                     <span class="inline-block px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm capitalize">
                         {{ module.type }}
                     </span>
-                </div>
+                </div> -->
 
                 <div>
                     <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Difficulty</h3>
@@ -130,7 +130,7 @@
                         <span class="font-semibold text-gray-900 dark:text-white">{{ module.view_count || 0 }}</span>
                     </div>
 
-                    <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-abyss-900 rounded-lg">
+                    <!-- <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-abyss-900 rounded-lg">
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -151,7 +151,7 @@
                                 :style="{ width: completionRate + '%' }"
                             ></div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -195,10 +195,10 @@ const props = defineProps({
 
 defineEmits(['close']);
 
-const completionRate = computed(() => {
-    if (!props.module.view_count || props.module.view_count === 0) return null;
-    return Math.round((props.module.completion_count / props.module.view_count) * 100);
-});
+// const completionRate = computed(() => {
+//     if (!props.module.view_count || props.module.view_count === 0) return null;
+//     return Math.round((props.module.completion_count / props.module.view_count) * 100);
+// });
 
 const formatCategory = (category) => {
     const map = {

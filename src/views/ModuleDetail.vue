@@ -62,9 +62,9 @@
                                 <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-semibold">
                                     {{ formatCategory(module.category) }}
                                 </span>
-                                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm capitalize">
+                                <!-- <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm capitalize">
                                     {{ module.type }}
-                                </span>
+                                </span> -->
                                 <span 
                                     v-if="module.is_featured"
                                     class="px-3 py-1 bg-yellow-500 text-white rounded-full text-sm font-bold"
@@ -105,7 +105,7 @@
 
                     <!-- Meta info bar -->
                     <div class="flex flex-wrap items-center gap-4 pt-4 border-t dark:border-abyss-700">
-                        <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <!-- <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
@@ -116,7 +116,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
                             </svg>
                             <span>{{ module.points || 0 }} points</span>
-                        </div>
+                        </div> -->
                         <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
@@ -130,12 +130,12 @@
                             </svg>
                             <span>{{ module.view_count || 0 }} views</span>
                         </div>
-                        <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <!-- <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                             <span>{{ module.completion_count || 0 }} completed</span>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Mobile: Info toggle -->
@@ -176,7 +176,7 @@
                 </div>
 
                 <!-- Complete button -->
-                <div class="bg-white dark:bg-abyss-800 rounded-lg shadow-md p-6">
+                <!-- <div class="bg-white dark:bg-abyss-800 rounded-lg shadow-md p-6">
                     <button 
                         @click="markAsComplete"
                         :disabled="completing"
@@ -187,7 +187,7 @@
                         </svg>
                         <span>{{ completing ? 'Marking Complete...' : 'Mark as Complete' }}</span>
                     </button>
-                </div>
+                </div> -->
             </div>
 
             <!-- Sidebar - Desktop: side panel, Mobile: overlay -->
@@ -271,7 +271,10 @@ const showEditModal = ref(false);
 const module = computed(() => moduleStore.currentModule);
 const canEdit = computed(() => {
     const user = authStore.user;
-    return user && (user.role === 'admin' || user.role === 'educator');
+    // return user && (user.role === 'admin' || user.role === 'educator');
+    return true;
+
+    // TODO for debug lang ng function, ibalik to sa proper verification
 });
 
 const toggleSidebar = () => {
@@ -288,17 +291,17 @@ const formatCategory = (category) => {
     return map[category] || category;
 };
 
-const markAsComplete = async () => {
-    completing.value = true;
-    try {
-        await moduleStore.markComplete(module.value.id);
-        toast.success('Module marked as complete! 🎉');
-    } catch (err) {
-        toast.error('Failed to mark module as complete');
-    } finally {
-        completing.value = false;
-    }
-};
+// const markAsComplete = async () => {
+//     completing.value = true;
+//     try {
+//         await moduleStore.markComplete(module.value.id);
+//         toast.success('Module marked as complete! 🎉');
+//     } catch (err) {
+//         toast.error('Failed to mark module as complete');
+//     } finally {
+//         completing.value = false;
+//     }
+// };
 
 const editModule = () => {
     showEditModal.value = true;
@@ -341,6 +344,8 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+@reference "@/style.css";
 /* Prose styling for content */
 .prose {
     @apply text-gray-700 dark:text-gray-300;

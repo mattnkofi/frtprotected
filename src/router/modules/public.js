@@ -33,6 +33,40 @@ const publicRoutes = [
         ],
     },
 
+
+    // ===== Facilitator Authentication Routes =====
+    {
+        path: '/facilitator',
+        component: () => import("@layouts/BlankLayout.vue"),
+        children: [
+            {
+                path: 'login',
+                name: 'facilitator.login',
+                component: () => import('@views/auth/FacilitatorLogin.vue'),
+                meta: { title: 'Facilitator Login' },
+                alias: ['/facilitator-login', '/educator/login']
+            },
+            {
+                path: 'forgot-password',
+                name: 'facilitator.forgotPassword',
+                component: () => import('@views/auth/ForgotPassword.vue'),
+                meta: { title: 'Facilitator - Forgot Password', isFacilitator: true }
+            },
+            {
+                path: 'reset-password',
+                name: 'facilitator.resetPassword',
+                component: () => import('@views/auth/ResetPassword.vue'),
+                meta: { title: 'Facilitator - Reset Password', isFacilitator: true }
+            },
+            {
+                path: 'change-password',
+                name: 'facilitator.changePassword',
+                component: () => import('@views/auth/FacilitatorChangePassword.vue'),
+                meta: { title: 'Set Your Password', requiresAuth: true, requiresRole: ['educator', 'moderator', 'admin'] }
+            }
+        ],
+    },
+
     {
         path: '/oauth/callback',
         name: 'oauth.callback',
