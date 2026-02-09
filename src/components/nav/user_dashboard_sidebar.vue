@@ -132,7 +132,7 @@ function goLeaderboard() {
 }
 
 function goSettings() {
-    router.push({ name: 'settings' })
+    router.push({ name: 'user.settings' })
 }
 
 function goManageBadges() {
@@ -144,7 +144,7 @@ function goModules() {
 }
 
 function goProfile() {
-    router.push({ name: 'user.settings' })
+    router.push({ name: 'user.profile' })
 }
 
 async function logout() {
@@ -517,14 +517,14 @@ watchEffect(() => emit('expanded-change', isFull.value))
                             <User
                                 class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors" />
                             <span
-                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">Profile</span>
+                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">My Profile</span>
                         </button>
                         <button @click="goSettings(); profileMenuOpen = false"
                             class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
                             <Settings
                                 class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-advocacy-purple-600 transition-colors" />
                             <span
-                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-advocacy-purple-600 dark:group-hover:text-advocacy-purple-400 transition-colors">Settings</span>
+                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-advocacy-purple-600 dark:group-hover:text-advocacy-purple-400 transition-colors">Account Settings</span>
                         </button>
                         <button @click="logout(); profileMenuOpen = false"
                             class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors group">

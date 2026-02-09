@@ -98,7 +98,7 @@ onUnmounted(() => document.removeEventListener('click', onClickAway))
 
 function goProfile() {
     open.value = false
-    router.push({ name: 'profile-settings' })
+    router.push({ name: 'user.profile' })
 }
 
 async function logout() {
