@@ -25,14 +25,7 @@ const isIcon = computed(() => !expanded.value || isMobile.value)
 
 const navigation = [
     { name: 'Main Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { name: 'Resource Library', icon: BookOpen, path: '/resources' },
-    { name: 'Class Analytics', icon: BrainCircuit, path: '/analytics' },
-    { name: 'Student Progress', icon: FileSearch, path: '/student-logs' },
-    { name: 'Early Alerts', icon: Bell, path: '/alerts', critical: true },
-    { name: 'Add Facilitator', icon: Users, path: '/admin/facilitators' },
-    { name: 'Content Approval', icon: ClipboardCheck, path: '/approvals' },
-    { name: 'AI Config', icon: SearchCode, path: '/ai-settings' },
-    { name: 'System Audit', icon: Database, path: '/audit-logs' },
+    { name: 'Manage Facilitators', icon: Users, path: '/admin/facilitators' },
 ]
 
 const reposition = async () => {

@@ -80,31 +80,7 @@ watch(profileMenuOpen, (open) => {
     if (open) reposition()
 })
 
-// watch(profileMenuOpen, async (open) => {
-//     if (!open) return
 
-//     // wait until dropdown exists in DOM
-//     await nextTick()
-
-//     const trigger = profileTriggerRef.value
-//     const dropdown = profileDropdownRef.value
-
-//     if (!trigger || !dropdown) return
-
-//     const { x, y } = await computePosition(trigger, dropdown, {
-//         placement: 'right-start', // default
-//         middleware: [
-//             offset(8),              // spacing
-//             flip(),                 // flip if no space
-//             shift({ padding: 8 })   // stay inside viewport
-//         ],
-//     })
-
-//     Object.assign(dropdown.style, {
-//         left: `${x}px`,
-//         top: `${y}px`,
-//     })
-// })
 
 const modules = ref([
     { id: 1, name: 'Gender & Power', icon: 'users2', color: 'text-advocacy-purple-600', progress: 65, status: 'in-progress' },
