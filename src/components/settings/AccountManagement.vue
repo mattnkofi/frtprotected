@@ -48,7 +48,7 @@
                         Current Password <span class="text-red-500">*</span>
                     </label>
                     <input v-model="passwordData.current_password" type="password" required
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
 
                 <div>
@@ -56,7 +56,7 @@
                         New Password <span class="text-red-500">*</span>
                     </label>
                     <input v-model="passwordData.password" type="password" required minlength="8"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                     <p class="mt-1 text-xs text-gray-500">Minimum 8 characters</p>
                 </div>
 
@@ -65,11 +65,11 @@
                         Confirm New Password <span class="text-red-500">*</span>
                     </label>
                     <input v-model="passwordData.password_confirmation" type="password" required
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
 
                 <button @click="changePassword" :disabled="!isPasswordFormValid || isChangingPassword"
-                    class="inline-flex items-center bg-kaitoke-green-600 text-white px-4 py-2 rounded-md hover:bg-kaitoke-green-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="inline-flex items-center bg-calm-lavender-600 text-white px-4 py-2 rounded-md hover:bg-calm-lavender-700 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed">
                     <svg v-if="isChangingPassword" class="animate-spin -ml-1 mr-2 h-4 w-4" fill="none"
                         viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -93,7 +93,7 @@
             </div>
 
             <div v-if="isLoadingSessions" class="mt-4 text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-kaitoke-green-600"></div>
+                <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-calm-lavender-600"></div>
             </div>
 
             <div v-else-if="sessions.length > 0" class="mt-4 space-y-3">

@@ -6,7 +6,7 @@ import UserDashboardLayout from '@/layouts/UserDashboardLayout.vue';
 import { learnerPages } from '../authenticatedPages/learner_pages';
 import { facilitatorPages } from '../authenticatedPages/facilitator_pages';
 import { adminPages } from '../authenticatedPages/admin_pages';
-
+import {FacilitatorClassrooms} from '../authenticatedPages/facilitator_classrooms';
 
 const authenticatedRoutes = [
     {
@@ -31,7 +31,16 @@ const authenticatedRoutes = [
         component: AdminDashboardLayout,
         meta: { requiresAuth: true, requiresRole: ['admin'] },
         children: adminPages       
-    }
+    },
+
+
+        // ===== Facilitator Classroom Routes =====
+    {
+        path: '/facilitator/classroom/:id',
+        component: FacilitatorDashboardLayout,
+        meta: { requiresAuth: true, requiresRole: ['educator', 'moderator'] },
+        children: FacilitatorClassrooms
+    },
 ]
 
 export default authenticatedRoutes

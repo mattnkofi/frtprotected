@@ -13,16 +13,16 @@
             <aside class="w-full md:w-64 space-y-1">
                 <nav class="flex flex-col space-y-1">
                     <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id"
-                        class="group flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 w-full text-left outline-none focus:ring-2 focus:ring-kaitoke-green-500/20 rounded-r-lg"
+                        class="group flex items-center px-4 py-3 text-sm font-medium border-l-4 transition-all duration-200 w-full text-left outline-none focus:ring-2 focus:ring-calm-lavender-500/20 rounded-r-lg"
                         :class="[
                             activeTab === tab.id
-                                ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20 text-kaitoke-green-700 dark:text-kaitoke-green-400 border-kaitoke-green-600 dark:border-kaitoke-green-500'
+                                ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20 text-calm-lavender-700 dark:text-calm-lavender-400 border-calm-lavender-600 dark:border-calm-lavender-500'
                                 : 'text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-800 hover:text-abyss-900 dark:hover:text-platinum-200 border-transparent'
                         ]">
                         <component :is="tab.icon" class="mr-3 h-5 w-5 flex-shrink-0 transition-colors duration-200"
                             :class="[
                                 activeTab === tab.id
-                                    ? 'text-kaitoke-green-600 dark:text-kaitoke-green-400'
+                                    ? 'text-calm-lavender-600 dark:text-calm-lavender-400'
                                     : 'text-platinum-400 group-hover:text-platinum-500 dark:text-platinum-500 dark:group-hover:text-platinum-300'
                             ]" />
                         {{ tab.name }}

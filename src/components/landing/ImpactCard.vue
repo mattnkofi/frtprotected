@@ -23,22 +23,22 @@ const props = defineProps({
 })
 
 const bgClass = {
-    green: 'bg-gradient-to-br from-kaitoke-green-50 to-emerald-50 dark:from-kaitoke-green-900/20 dark:to-emerald-900/20',
+    green: 'bg-gradient-to-br from-calm-lavender-50 to-emerald-50 dark:from-calm-lavender-900/20 dark:to-emerald-900/20',
     orange: 'bg-gradient-to-br from-sun-50 to-amber-50 dark:from-sun-900/20 dark:to-amber-900/20'
 }[props.variant]
 
 const borderClass = {
-    green: 'border-kaitoke-green-200 dark:border-kaitoke-green-800',
+    green: 'border-calm-lavender-200 dark:border-calm-lavender-800',
     orange: 'border-sun-200 dark:border-sun-800'
 }[props.variant]
 
 const titleClass = {
-    green: 'text-kaitoke-green-900 dark:text-kaitoke-green-300',
+    green: 'text-calm-lavender-900 dark:text-calm-lavender-300',
     orange: 'text-sun-900 dark:text-sun-300'
 }[props.variant]
 
 const badgeBgClass = {
-    green: 'bg-kaitoke-green-500',
+    green: 'bg-calm-lavender-500',
     orange: 'bg-sun-500'
 }[props.variant]
 </script>

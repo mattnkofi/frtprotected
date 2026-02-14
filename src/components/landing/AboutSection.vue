@@ -15,7 +15,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-                <router-link :to="{ name: 'signup' }" class="px-8 py-4 bg-kaitoke-green-600 hover:bg-kaitoke-green-700 text-white font-semibold rounded-lg transition shadow-lg hover:shadow-xl">
+                <router-link :to="{ name: 'signup' }" class="px-8 py-4 bg-calm-lavender-600 hover:bg-calm-lavender-700 text-white font-semibold rounded-lg transition shadow-lg hover:shadow-xl">
                     Join Our Community
                 </router-link>
             </div>

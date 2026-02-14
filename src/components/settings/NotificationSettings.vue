@@ -10,7 +10,7 @@
 
     <!-- Loading State -->
     <div v-if="isLoading" class="text-center py-8">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-kaitoke-green-600"></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-calm-lavender-600"></div>
       <p class="mt-2 text-sm text-gray-500">Loading preferences...</p>
     </div>
 
@@ -43,7 +43,7 @@
         </div>
         <div class="ml-3 flex h-5 items-center">
           <input v-model="preferences.email_notifications" type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-kaitoke-green-600 focus:ring-kaitoke-green-500" />
+            class="h-4 w-4 rounded border-gray-300 text-calm-lavender-600 focus:ring-calm-lavender-500" />
         </div>
       </div>
 
@@ -57,7 +57,7 @@
         </div>
         <div class="ml-3 flex h-5 items-center">
           <input v-model="preferences.module_reminders" type="checkbox" :disabled="!preferences.email_notifications"
-            class="h-4 w-4 rounded border-gray-300 text-kaitoke-green-600 focus:ring-kaitoke-green-500 disabled:opacity-50 disabled:cursor-not-allowed" />
+            class="h-4 w-4 rounded border-gray-300 text-calm-lavender-600 focus:ring-calm-lavender-500 disabled:opacity-50 disabled:cursor-not-allowed" />
         </div>
       </div>
 
@@ -71,7 +71,7 @@
         </div>
         <div class="ml-3 flex h-5 items-center">
           <input v-model="preferences.achievement_alerts" type="checkbox" :disabled="!preferences.email_notifications"
-            class="h-4 w-4 rounded border-gray-300 text-kaitoke-green-600 focus:ring-kaitoke-green-500 disabled:opacity-50 disabled:cursor-not-allowed" />
+            class="h-4 w-4 rounded border-gray-300 text-calm-lavender-600 focus:ring-calm-lavender-500 disabled:opacity-50 disabled:cursor-not-allowed" />
         </div>
       </div>
 
@@ -85,7 +85,7 @@
         </div>
         <div class="ml-3 flex h-5 items-center">
           <input v-model="preferences.platform_updates" type="checkbox" :disabled="!preferences.email_notifications"
-            class="h-4 w-4 rounded border-gray-300 text-kaitoke-green-600 focus:ring-kaitoke-green-500 disabled:opacity-50 disabled:cursor-not-allowed" />
+            class="h-4 w-4 rounded border-gray-300 text-calm-lavender-600 focus:ring-calm-lavender-500 disabled:opacity-50 disabled:cursor-not-allowed" />
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
     <!-- Save Button -->
     <div class="flex justify-end">
       <button @click="savePreferences" :disabled="isSaving || isLoading"
-        class="inline-flex items-center px-6 py-2 bg-kaitoke-green-600 text-white text-sm font-medium rounded-md hover:bg-kaitoke-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-kaitoke-green-500 disabled:opacity-50 disabled:cursor-not-allowed">
+        class="inline-flex items-center px-6 py-2 bg-calm-lavender-600 text-white text-sm font-medium rounded-md hover:bg-calm-lavender-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-calm-lavender-500 disabled:opacity-50 disabled:cursor-not-allowed">
         <svg v-if="isSaving" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor"

@@ -100,7 +100,13 @@ watch(() => route.path, () => {
                 </template>
             </SidebarNavItem>
 
-            <SidebarNavItem to="/facilitator/students" :title="sidebarStore.isExpanded ? 'My Students' : ''">
+            <SidebarNavItem to="/facilitator/students" :title="sidebarStore.isExpanded ? 'Manage Students' : ''">
+                <template #icon>
+                    <UsersIcon class="h-5 w-5" />
+                </template>
+            </SidebarNavItem>
+
+            <SidebarNavItem to="/facilitator/classrooms" :title="sidebarStore.isExpanded ? 'Manage Classrooms' : ''">
                 <template #icon>
                     <UsersIcon class="h-5 w-5" />
                 </template>

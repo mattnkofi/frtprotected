@@ -1,19 +1,106 @@
 const publicRoutes = [
-    // {
-    //     path: '/share/:token',
-    //     name: 'public.share',
-    //     component: () => import('@/views/storage/PublicShareView.vue'),
-    //     meta: {
-    //         title: 'Shared Document',
-    //         requiresAuth: false
-    //     }
-    // },
     {
         path: "/",
         name: "home",
         component: () => import("@views/Landing.vue"),
     },
 
+    // ===== Student Classroom Routes =====
+    {
+        path: "/classroom",
+        name: "classroom.list",
+        component: () => import("@views/classroom/ClassroomList.vue"),
+    },
+
+    {
+        path: '/classroom/:id',
+        component: () => import('@/views/classroom/Classroom.vue'),
+        children: [
+            {
+                path: '',
+                name: 'classroom.home',
+                component: () => import('@/views/classroom/ClassroomHome.vue')
+            },
+            {
+                path: 'channel/:channelId',
+                name: 'classroom.channel',
+                component: () => import('@/views/classroom/ClassroomChannel.vue'),
+                props: true
+            },
+            {
+                path: 'grades',
+                name: 'classroom.grades',
+                component: () => import('@/views/classroom/ClassroomGrade.vue')
+            }
+        ]
+    },
+
+    {
+        path: "/classroom/analytics",
+        name: "classroom.analytics",
+        component: () => import("@views/classroom/ClassroomAnalytics.vue"),
+    },
+
+    // ===== Facilitator Classroom Management Routes =====
+    // {
+    //     path: "/facilitator/classrooms",
+    //     name: "facilitator.classrooms",
+    //     component: () => import("@views/facilitator/FacilitatorClassroomList.vue"),
+    //     meta: { title: 'My Classrooms' }
+    // },   
+
+    // {
+    //     path: "/facilitator/classroom/create",
+    //     name: "classroom.create",
+    //     component: () => import("@views/facilitator/CreateClassroom.vue"),
+    //     meta: { title: 'Create Classroom' }
+    // },
+
+    // {
+    //     path: '/facilitator/classroom/:id',
+    //     component: () => import('@/views/facilitator/ClassroomDashboard.vue'),
+    //     meta: { title: 'Manage Classroom' },
+    //     children: [
+    //         {
+    //             path: '',
+    //             name: 'classroom.dashboard',
+    //             redirect: { name: 'classroom.manage.home' }
+    //         },
+            // {
+            //     path: 'home',
+            //     name: 'classroom.manage.home',
+            //     component: () => import('@/views/classroom/ClassroomHome.vue')
+            // },
+            // {
+            //     path: 'students',
+            //     name: 'classroom.students',
+            //     component: () => import('@/views/facilitator/StudentManagement.vue')
+            // },
+            // {
+            //     path: 'grades',
+            //     name: 'classroom.manage.grades',
+            //     component: () => import('@/views/facilitator/GradesManagement.vue')
+            // },
+            // {
+            //     path: 'analytics',
+            //     name: 'classroom.manage.analytics',
+            //     component: () => import('@/views/facilitator/ClassroomAnalytics.vue')
+            // },
+            // {
+            //     path: 'leaderboard',
+            //     name: 'classroom.leaderboard',
+            //     component: () => import('@/views/facilitator/Leaderboard.vue')
+            // },
+            // {
+            //     path: 'channel/:channelId',
+            //     name: 'classroom.manage.channel',
+            //     component: () => import('@/views/facilitator/ChannelManagement.vue'),
+            //     props: true
+            // }
+    //     ]
+    // },
+
+    // ===== Account Routes =====
     {
         path: '/account',
         component: () => import("@layouts/BlankLayout.vue"),
@@ -32,7 +119,6 @@ const publicRoutes = [
             },
         ],
     },
-
 
     // ===== Facilitator Authentication Routes =====
     {

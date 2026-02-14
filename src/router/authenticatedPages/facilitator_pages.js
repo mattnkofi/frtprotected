@@ -6,7 +6,7 @@ const SettingsView = () => import('@/views/Settings.vue');
 export const facilitatorPages = [
 
     {
-        path: '',
+        path: 'dashboard',
         name: 'facilitator.dashboard',
         component: () => import('@/views/facilitator/FacilitatorDashboard.vue'),
         meta: { title: 'Facilitator Portal' }
@@ -17,6 +17,26 @@ export const facilitatorPages = [
         component: () => import('@/views/Modules.vue'),
         meta: { title: 'My Modules' }
     },
+
+    {
+        path: 'students',
+        name: 'facilitator.students',
+        component: () => import('@/views/facilitator/StudentManagement.vue'),
+        meta: { title: 'My Modules' }
+    },
+    {
+        path: "classrooms",
+        name: "facilitator.classrooms",
+        component: () => import("@views/facilitator/FacilitatorClassroomList.vue"),
+        meta: { title: 'My Classrooms' }
+    },
+    {
+        path: "classroom/create",
+        name: "classroom.create",
+        component: () => import("@views/facilitator/CreateClassroom.vue"),
+        meta: { title: 'Create Classroom' }
+    },
+
     {
         path: 'modules/:id',
         name: 'facilitator.module',

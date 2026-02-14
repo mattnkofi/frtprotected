@@ -25,7 +25,7 @@
                             class="w-full px-4 py-3 rounded-lg border border-platinum-300 dark:border-abyss-600 
                                    bg-platinum-50 dark:bg-abyss-900/50 text-abyss-900 dark:text-platinum-50
                                    placeholder-platinum-400 dark:placeholder-platinum-500
-                                   focus:outline-none focus:ring-2 focus:ring-kaitoke-green-500/50 focus:border-kaitoke-green-500
+                                   focus:outline-none focus:ring-2 focus:ring-calm-lavender-500/50 focus:border-calm-lavender-500
                                    transition-all duration-200"
                             :class="{ 'border-red-500 focus:ring-red-500/50 focus:border-red-500': errors.email }" />
                         <p v-if="errors.email" class="text-xs text-red-500 mt-1">{{ errors.email }}</p>
@@ -43,7 +43,7 @@
                                 class="w-full px-4 py-3 rounded-lg border border-platinum-300 dark:border-abyss-600 
                                        bg-platinum-50 dark:bg-abyss-900/50 text-abyss-900 dark:text-platinum-50
                                        placeholder-platinum-400 dark:placeholder-platinum-500
-                                       focus:outline-none focus:ring-2 focus:ring-kaitoke-green-500/50 focus:border-kaitoke-green-500
+                                       focus:outline-none focus:ring-2 focus:ring-calm-lavender-500/50 focus:border-calm-lavender-500
                                        transition-all duration-200"
                                 :class="{ 'border-red-500 focus:ring-red-500/50 focus:border-red-500': errors.password }" />
                             <p v-if="errors.password" class="text-xs text-red-500 mt-1">{{ errors.password }}</p>
@@ -59,7 +59,7 @@
                                 placeholder="••••••••" required class="w-full px-4 py-3 rounded-lg border border-platinum-300 dark:border-abyss-600 
                                        bg-platinum-50 dark:bg-abyss-900/50 text-abyss-900 dark:text-platinum-50
                                        placeholder-platinum-400 dark:placeholder-platinum-500
-                                       focus:outline-none focus:ring-2 focus:ring-kaitoke-green-500/50 focus:border-kaitoke-green-500
+                                       focus:outline-none focus:ring-2 focus:ring-calm-lavender-500/50 focus:border-calm-lavender-500
                                        transition-all duration-200"
                                 :class="{ 'border-red-500 focus:ring-red-500/50 focus:border-red-500': errors.confirmPassword }" />
                             <p v-if="errors.confirmPassword" class="text-xs text-red-500 mt-1">{{ errors.confirmPassword
@@ -71,24 +71,24 @@
                     <div class="flex items-start gap-3 pt-2">
                         <div class="flex items-center h-5">
                             <input id="terms" v-model="form.agreeToTerms" type="checkbox"
-                                class="w-4 h-4 text-kaitoke-green-600 border-gray-300 rounded focus:ring-kaitoke-green-500 cursor-pointer" />
+                                class="w-4 h-4 text-calm-lavender-600 border-gray-300 rounded focus:ring-calm-lavender-500 cursor-pointer" />
                         </div>
                         <label for="terms" class="text-sm text-platinum-600 dark:text-platinum-300">
                             I agree to the
                             <a href="#"
-                                class="text-kaitoke-green-600 dark:text-kaitoke-green-400 hover:underline font-medium">Terms
+                                class="text-calm-lavender-600 dark:text-calm-lavender-400 hover:underline font-medium">Terms
                                 of Service</a>
                             and
                             <a href="#"
-                                class="text-kaitoke-green-600 dark:text-kaitoke-green-400 hover:underline font-medium">Privacy
+                                class="text-calm-lavender-600 dark:text-calm-lavender-400 hover:underline font-medium">Privacy
                                 Policy</a>
                         </label>
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" :disabled="isLoading || isGoogleLoading"
-                        class="w-full py-3 px-4 bg-kaitoke-green-600 text-white font-semibold rounded-lg 
-                               hover:bg-kaitoke-green-700 focus:ring-4 focus:ring-kaitoke-green-500/30
+                        class="w-full py-3 px-4 bg-calm-lavender-600 text-white font-semibold rounded-lg 
+                               hover:bg-calm-lavender-700 focus:ring-4 focus:ring-calm-lavender-500/30
                                disabled:opacity-50 disabled:cursor-not-allowed
                                transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
                         <span v-if="!isLoading">Create Account</span>
@@ -151,7 +151,7 @@
                 <p class="mt-8 text-center text-sm text-platinum-600 dark:text-platinum-400">
                     Already have an account?
                     <router-link :to="{ name: 'login' }"
-                        class="text-kaitoke-green-600 dark:text-kaitoke-green-400 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                        class="text-calm-lavender-600 dark:text-calm-lavender-400 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
                         Sign in
                     </router-link>
                 </p>

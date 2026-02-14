@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-6">
         <div class="bg-white dark:bg-abyss-800 rounded-xl p-8 border border-sun-200 dark:border-abyss-700">
-            <router-link :to="{ name: 'user.dashboard' }" class="text-kaitoke-green-600 hover:underline text-sm font-medium mb-4 inline-block">
+            <router-link :to="{ name: 'user.dashboard' }" class="text-calm-lavender-600 hover:underline text-sm font-medium mb-4 inline-block">
                 ← Back to Dashboard
             </router-link>
             
@@ -19,7 +19,7 @@
                     <span class="font-medium text-abyss-900 dark:text-platinum-100">{{ overallProgress }}%</span>
                 </div>
                 <div class="h-3 bg-sun-100 dark:bg-abyss-700 rounded-full overflow-hidden">
-                    <div class="h-full bg-kaitoke-green-500" :style="{ width: overallProgress + '%' }"></div>
+                    <div class="h-full bg-calm-lavender-500" :style="{ width: overallProgress + '%' }"></div>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                         <p class="font-medium text-abyss-900 dark:text-platinum-100">{{ module.name }}</p>
                         <p class="text-xs text-platinum-500">{{ index + 1 }} of {{ modules.length }}</p>
                     </div>
-                    <button class="px-3 py-2 bg-kaitoke-green-600 hover:bg-kaitoke-green-700 text-white text-sm font-medium rounded-lg transition">
+                    <button class="px-3 py-2 bg-calm-lavender-600 hover:bg-calm-lavender-700 text-white text-sm font-medium rounded-lg transition">
                         {{ module.status === 'completed' ? 'Review' : 'Start' }}
                     </button>
                 </div>

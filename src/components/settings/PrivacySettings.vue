@@ -10,7 +10,7 @@
 
         <!-- Loading State -->
         <div v-if="isLoading" class="text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-kaitoke-green-600"></div>
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-calm-lavender-600"></div>
             <p class="mt-2 text-sm text-gray-500">Loading privacy settings...</p>
         </div>
 
@@ -34,7 +34,7 @@
                     </div>
                     <div class="ml-4">
                         <select v-model="settings.profile_visibility"
-                            class="mt-1 block rounded-md border-gray-300 py-2 pl-3 pr-10 text-sm focus:border-kaitoke-green-500 focus:outline-none focus:ring-kaitoke-green-500">
+                            class="mt-1 block rounded-md border-gray-300 py-2 pl-3 pr-10 text-sm focus:border-calm-lavender-500 focus:outline-none focus:ring-calm-lavender-500">
                             <option value="private">Private</option>
                             <option value="public">Public</option>
                         </select>
@@ -62,7 +62,7 @@
                     <div class="ml-4">
                         <input type="checkbox" v-model="settings.show_achievements"
                             :disabled="settings.profile_visibility !== 'public'"
-                            class="h-4 w-4 text-kaitoke-green-600 focus:ring-kaitoke-green-500 border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed" />
+                            class="h-4 w-4 text-calm-lavender-600 focus:ring-calm-lavender-500 border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed" />
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     <div class="ml-4">
                         <input type="checkbox" v-model="settings.show_progress"
                             :disabled="settings.profile_visibility !== 'public'"
-                            class="h-4 w-4 text-kaitoke-green-600 border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed" />
+                            class="h-4 w-4 text-calm-lavender-600 border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed" />
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="ml-4">
                         <input type="checkbox" v-model="settings.allow_messages"
-                            class="h-4 w-4 text-kaitoke-green-600 focus:ring-kaitoke-green-500 border-gray-300 rounded" />
+                            class="h-4 w-4 text-calm-lavender-600 focus:ring-calm-lavender-500 border-gray-300 rounded" />
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
         <!-- Save Button -->
         <div class="flex justify-end">
             <button @click="saveSettings" :disabled="isSaving || isLoading"
-                class="inline-flex items-center px-6 py-2 bg-kaitoke-green-600 text-white text-sm font-medium rounded-md hover:bg-kaitoke-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-kaitoke-green-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                class="inline-flex items-center px-6 py-2 bg-calm-lavender-600 text-white text-sm font-medium rounded-md hover:bg-calm-lavender-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-calm-lavender-500 disabled:opacity-50 disabled:cursor-not-allowed">
                 <svg v-if="isSaving" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor"

@@ -40,7 +40,7 @@ function goBack() {
                 <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                     <button @click="goHome"
                         class="flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-300
-                            bg-kaitoke-green-600 hover:bg-kaitoke-green-700 dark:hover:bg-kaitoke-green-500 text-platinum-50 dark:text-abyss-900 shadow-lg shadow-kaitoke-green-500/20">
+                            bg-calm-lavender-600 hover:bg-calm-lavender-700 dark:hover:bg-calm-lavender-500 text-platinum-50 dark:text-abyss-900 shadow-lg shadow-calm-lavender-500/20">
                         Go to Homepage
                     </button>
                     <button @click="goBack"

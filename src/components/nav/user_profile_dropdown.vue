@@ -3,9 +3,9 @@
         <button @click.stop="open = !open" type="button" :aria-expanded="open" class="group flex items-center gap-2 rounded-full bg-sun-100 p-1 pr-2
              hover:bg-sun-200 text-abyss-900
              dark:bg-abyss-700 dark:hover:bg-abyss-600 dark:text-platinum-200 transition">
-            <img :src="avatar" :alt="name" class="h-8 w-8 rounded-full object-cover border border-kaitoke-green-600" />
+            <img :src="avatar" :alt="name" class="h-8 w-8 rounded-full object-cover border border-calm-lavender-600" />
             <span class="hidden md:inline text-sm font-medium">{{ name }}</span>
-            <svg class="w-4 h-4 text-platinum-600 group-hover:text-kaitoke-green-500 transition" fill="none"
+            <svg class="w-4 h-4 text-platinum-600 group-hover:text-calm-lavender-500 transition" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>

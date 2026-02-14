@@ -271,10 +271,10 @@ watchEffect(() => emit('expanded-change', isFull.value))
                 <span v-if="isFull"
                     class="text-[10px] font-black uppercase tracking-[0.2em] text-platinum-400">Navigation</span>
                 <button @click="expanded = !expanded"
-                    class="p-1.5 rounded-lg bg-platinum-50 dark:bg-abyss-800 hover:scale-110 transition-all border border-transparent hover:border-kaitoke-green-500/50"
+                    class="p-1.5 rounded-lg bg-platinum-50 dark:bg-abyss-800 hover:scale-110 transition-all border border-transparent hover:border-calm-lavender-500/50"
                     :aria-label="isFull ? 'Collapse sidebar' : 'Expand sidebar'">
-                    <ChevronLeft v-if="isFull" class="h-4 w-4 text-kaitoke-green-600" />
-                    <ChevronRight v-else class="h-4 w-4 text-kaitoke-green-600" />
+                    <ChevronLeft v-if="isFull" class="h-4 w-4 text-calm-lavender-600" />
+                    <ChevronRight v-else class="h-4 w-4 text-calm-lavender-600" />
                 </button>
             </div>
 
@@ -282,7 +282,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
 
                 <section class="space-y-2">
                     <div v-if="isFull || isMobileShown"
-                        class="px-3 mb-4 text-[10px] font-bold uppercase tracking-[0.15em] text-kaitoke-green-600 dark:text-kaitoke-green-400 opacity-70">
+                        class="px-3 mb-4 text-[10px] font-bold uppercase tracking-[0.15em] text-calm-lavender-600 dark:text-calm-lavender-400 opacity-70">
                         Active Modules
                     </div>
 
@@ -290,13 +290,13 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <button v-for="module in modules" :key="'module-' + module.id" @click="goModule(module.id)"
                             :title="module.name" :class="[
                                 'group w-full rounded-xl transition-all duration-300 px-3 py-2.5 relative overflow-hidden',
-                                'hover:bg-kaitoke-green-50/50 dark:hover:bg-kaitoke-green-900/10',
+                                'hover:bg-calm-lavender-50/50 dark:hover:bg-calm-lavender-900/10',
                                 route.params.id == module.id
-                                    ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20 shadow-sm'
+                                    ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20 shadow-sm'
                                     : 'transparent'
                             ]">
                             <div v-if="route.params.id == module.id"
-                                class="absolute left-0 top-2 bottom-2 w-1 bg-kaitoke-green-500 rounded-r-full shadow-[0_0_10px_rgba(34,197,94,0.6)]">
+                                class="absolute left-0 top-2 bottom-2 w-1 bg-calm-lavender-500 rounded-r-full shadow-[0_0_10px_rgba(34,197,94,0.6)]">
                             </div>
 
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-between']">
@@ -319,13 +319,13 @@ watchEffect(() => emit('expanded-change', isFull.value))
                                     </div>
                                     <span v-if="!isIcon" :class="[
                                         'truncate font-heading text-sm tracking-wide transition-colors',
-                                        route.params.id == module.id ? 'font-bold text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'font-medium'
+                                        route.params.id == module.id ? 'font-bold text-calm-lavender-700 dark:text-calm-lavender-300' : 'font-medium'
                                     ]">
                                         {{ module.name }}
                                     </span>
                                 </div>
                                 <div v-if="!isIcon && module.progress > 0" class="flex flex-col items-end">
-                                    <span class="text-[10px] font-black text-kaitoke-green-600/70">{{ module.progress
+                                    <span class="text-[10px] font-black text-calm-lavender-600/70">{{ module.progress
                                         }}%</span>
                                 </div>
                             </div>
@@ -343,19 +343,19 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <button v-for="path in myLearningPaths" :key="'path-' + path.id" @click="goPath(path.id)"
                             class="w-full text-left group">
                             <p
-                                class="text-xs font-bold text-abyss-800 dark:text-platinum-200 truncate mb-1.5 group-hover:text-kaitoke-green-500 transition-colors">
+                                class="text-xs font-bold text-abyss-800 dark:text-platinum-200 truncate mb-1.5 group-hover:text-calm-lavender-500 transition-colors">
                                 {{ path.name }}
                             </p>
                             <div
                                 class="relative h-1 w-full bg-platinum-100 dark:bg-abyss-800 rounded-full overflow-hidden">
-                                <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-kaitoke-green-500 to-emerald-400 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(34,197,94,0.4)]"
+                                <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-calm-lavender-500 to-emerald-400 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(34,197,94,0.4)]"
                                     :style="{ width: path.progress + '%' }"></div>
                             </div>
                         </button>
                     </div>
                     <div v-else class="flex flex-col items-center gap-4">
                         <div v-for="path in myLearningPaths" :key="'p-icon-' + path.id"
-                            class="w-2 h-2 rounded-full bg-kaitoke-green-500/40 border border-kaitoke-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]">
+                            class="w-2 h-2 rounded-full bg-calm-lavender-500/40 border border-calm-lavender-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]">
                         </div>
                     </div>
                 </section>
@@ -363,7 +363,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
                 <section class="pt-4 border-t border-platinum-100 dark:border-abyss-800">
                     <div class="space-y-1">
                         <button @click="goModules()"
-                            :class="['sidebar-btn group', route.name === 'user.modules' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
+                            :class="['sidebar-btn group', route.name === 'user.modules' ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20' : '']">
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
                                 <div
                                     class="p-2 rounded-lg group-hover:bg-advocacy-purple-100 dark:group-hover:bg-advocacy-purple-900/20 transition-colors">
@@ -392,18 +392,18 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         </button>
 
                         <button @click="goManageBadges()"
-                            :class="['sidebar-btn group', route.name === 'user.managebadges' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
+                            :class="['sidebar-btn group', route.name === 'user.managebadges' ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20' : '']">
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
                                 <div
-                                    class="p-2 rounded-lg group-hover:bg-kaitoke-green-100 dark:group-hover:bg-kaitoke-green-900/30 transition-colors">
+                                    class="p-2 rounded-lg group-hover:bg-calm-lavender-100 dark:group-hover:bg-calm-lavender-900/30 transition-colors">
                                     <ShieldCheck :class="[
                                         'h-5 w-5 stroke-[1.75] transition-colors',
-                                        route.name === 'user.managebadges' ? 'text-kaitoke-green-600' : 'text-platinum-500 group-hover:text-kaitoke-green-600'
+                                        route.name === 'user.managebadges' ? 'text-calm-lavender-600' : 'text-platinum-500 group-hover:text-calm-lavender-600'
                                     ]" />
                                 </div>
                                 <span v-if="!isIcon" :class="[
                                     'font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform',
-                                    route.name === 'user.managebadges' ? 'text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'text-platinum-600 dark:text-platinum-400'
+                                    route.name === 'user.managebadges' ? 'text-calm-lavender-700 dark:text-calm-lavender-300' : 'text-platinum-600 dark:text-platinum-400'
                                 ]">Manage Badges</span>
                             </div>
                         </button>
@@ -419,7 +419,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <div class="flex items-center justify-between gap-3">
                             <div class="flex items-center gap-3 min-w-0">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-kaitoke-green-500 to-emerald-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-kaitoke-green-500/20 flex-shrink-0">
+                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-calm-lavender-500 to-emerald-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-calm-lavender-500/20 flex-shrink-0">
                                     {{ getOrgInitials(mine[0]) || 'U' }}
                                 </div>
                                 <div class="flex-1 min-w-0">
@@ -448,7 +448,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
                                 class="flex justify-center p-2 rounded-lg hover:bg-platinum-100 dark:hover:bg-abyss-800 transition-colors"
                                 aria-label="Profile menu">
                                 <div
-                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-kaitoke-green-500 to-emerald-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-kaitoke-green-500/20 hover:shadow-xl hover:scale-110 transition-all">
+                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-calm-lavender-500 to-emerald-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-calm-lavender-500/20 hover:shadow-xl hover:scale-110 transition-all">
                                     {{ getOrgInitials(mine[0]) || 'U' }}
                                 </div>
                             </button>
@@ -460,9 +460,9 @@ watchEffect(() => emit('expanded-change', isFull.value))
                                     <button @click="goProfile(); profileMenuOpen = false"
                                         class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
                                         <User
-                                            class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors flex-shrink-0" />
+                                            class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-calm-lavender-600 transition-colors flex-shrink-0" />
                                         <span
-                                            class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">Profile</span>
+                                            class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-calm-lavender-600 dark:group-hover:text-calm-lavender-400 transition-colors">Profile</span>
                                     </button>
                                     <button @click="goSettings(); profileMenuOpen = false"
                                         class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
@@ -491,9 +491,9 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <button @click="goProfile(); profileMenuOpen = false"
                             class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
                             <User
-                                class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors" />
+                                class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-calm-lavender-600 transition-colors" />
                             <span
-                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">My Profile</span>
+                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-calm-lavender-600 dark:group-hover:text-calm-lavender-400 transition-colors">My Profile</span>
                         </button>
                         <button @click="goSettings(); profileMenuOpen = false"
                             class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">

@@ -7,7 +7,7 @@
         <p class="text-sm text-gray-500">Essential for minors and account recovery.</p>
       </div>
       <button @click="openModal()"
-        class="inline-flex items-center px-4 py-2 bg-kaitoke-green-600 text-white text-sm font-medium rounded-md hover:bg-kaitoke-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-kaitoke-green-500">
+        class="inline-flex items-center px-4 py-2 bg-calm-lavender-600 text-white text-sm font-medium rounded-md hover:bg-calm-lavender-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-calm-lavender-500">
         <UserPlusIcon class="h-4 w-4 mr-2" />
         Add Guardian
       </button>
@@ -15,7 +15,7 @@
 
     <!-- Loading State -->
     <div v-if="isLoading" class="text-center py-8">
-      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-kaitoke-green-600"></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-calm-lavender-600"></div>
       <p class="mt-2 text-sm text-gray-500">Loading guardians...</p>
     </div>
 
@@ -58,7 +58,7 @@
               </span>
             </td>
             <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-              <button @click="openModal(guardian)" class="text-kaitoke-green-600 hover:text-kaitoke-green-900 mr-4">
+              <button @click="openModal(guardian)" class="text-calm-lavender-600 hover:text-calm-lavender-900 mr-4">
                 Edit
               </button>
               <button @click="confirmDelete(guardian)" class="text-red-600 hover:text-red-900">
@@ -77,7 +77,7 @@
       <p class="mt-1 text-sm text-gray-500">Get started by adding a guardian for account recovery.</p>
       <div class="mt-6">
         <button @click="openModal()"
-          class="inline-flex items-center px-4 py-2 bg-kaitoke-green-600 text-white text-sm font-medium rounded-md hover:bg-kaitoke-green-700">
+          class="inline-flex items-center px-4 py-2 bg-calm-lavender-600 text-white text-sm font-medium rounded-md hover:bg-calm-lavender-700">
           <UserPlusIcon class="h-4 w-4 mr-2" />
           Add Your First Guardian
         </button>
@@ -101,7 +101,7 @@
                   Guardian Type <span class="text-red-500">*</span>
                 </label>
                 <select v-model="form.guardian_type" required
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-kaitoke-green-500 focus:border-kaitoke-green-500">
+                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-calm-lavender-500 focus:border-calm-lavender-500">
                   <option value="">Select type...</option>
                   <option value="parent">Parent</option>
                   <option value="legal_guardian">Legal Guardian</option>
@@ -116,7 +116,7 @@
                 </label>
                 <input v-model="form.full_name" type="text" required minlength="3" maxlength="255"
                   placeholder="Juan Dela Cruz"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-kaitoke-green-500 focus:border-kaitoke-green-500" />
+                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-calm-lavender-500 focus:border-calm-lavender-500" />
               </div>
 
               <!-- Relationship -->
@@ -126,7 +126,7 @@
                 </label>
                 <input v-model="form.relationship" type="text" required maxlength="100"
                   placeholder="Mother, Father, Uncle, etc."
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-kaitoke-green-500 focus:border-kaitoke-green-500" />
+                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-calm-lavender-500 focus:border-calm-lavender-500" />
               </div>
 
               <!-- Phone Number -->
@@ -136,7 +136,7 @@
                 </label>
                 <input v-model="form.phone_number" type="tel" required pattern="^\+639\d{9}$"
                   placeholder="+639XXXXXXXXX"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-kaitoke-green-500 focus:border-kaitoke-green-500" />
+                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-calm-lavender-500 focus:border-calm-lavender-500" />
                 <p class="mt-1 text-xs text-gray-500">Format: +639XXXXXXXXX</p>
               </div>
 
@@ -146,7 +146,7 @@
                   Email (Optional)
                 </label>
                 <input v-model="form.email" type="email" placeholder="guardian@example.com"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-kaitoke-green-500 focus:border-kaitoke-green-500" />
+                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-calm-lavender-500 focus:border-calm-lavender-500" />
               </div>
 
               <!-- Address (Optional) -->
@@ -155,14 +155,14 @@
                   Address (Optional)
                 </label>
                 <textarea v-model="form.address" rows="2" placeholder="Complete address"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-kaitoke-green-500 focus:border-kaitoke-green-500"></textarea>
+                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-calm-lavender-500 focus:border-calm-lavender-500"></textarea>
               </div>
 
               <!-- Primary Guardian Checkbox -->
               <div class="flex items-start">
                 <div class="flex items-center h-5">
                   <input v-model="form.is_primary" type="checkbox" id="is_primary"
-                    class="h-4 w-4 text-kaitoke-green-600 border-gray-300 rounded focus:ring-kaitoke-green-500" />
+                    class="h-4 w-4 text-calm-lavender-600 border-gray-300 rounded focus:ring-calm-lavender-500" />
                 </div>
                 <div class="ml-3 text-sm">
                   <label for="is_primary" class="font-medium text-gray-700">
@@ -181,7 +181,7 @@
                   Cancel
                 </button>
                 <button type="submit" :disabled="isSaving"
-                  class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-kaitoke-green-600 rounded-md hover:bg-kaitoke-green-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                  class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-calm-lavender-600 rounded-md hover:bg-calm-lavender-700 disabled:opacity-50 disabled:cursor-not-allowed">
                   <svg v-if="isSaving" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none"
                     viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
