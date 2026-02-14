@@ -46,12 +46,27 @@ const authenticatedRoutes = [
                 component: () => import('@/views/Settings.vue'),
                 meta: { title: 'Settings' }
             },
+
+            // {
+            //     path: 'manage-badges',
+            //     name: 'user.managebadges',
+            //     component: () => import('@/views/dashboard/ManageBadges.vue'),
+            //     meta: { title: 'Manage Badges' }
+            // },
+
             {
-                path: 'manage-badges',
-                name: 'user.managebadges',
-                component: () => import('@/views/dashboard/ManageBadges.vue'),
-                meta: { title: 'Manage Badges' }
+                path: 'rewards/shop',
+                name: 'user.rewards.shop',  // Changed from 'user.rewards'
+                component: () => import('@/views/UserRewardShop.vue'),
+                meta: { title: 'Reward Shop' }
             },
+            {
+                path: 'rewards/history',
+                name: 'user.rewards.history',  // Changed from 'user.rewards'
+                component: () => import('@/views/UserRedemptionHistory.vue'),
+                meta: { title: 'Redemption History' }
+            },
+
         ]
     },
 
@@ -121,6 +136,21 @@ const authenticatedRoutes = [
             //     component: () => import('@/views/facilitator/Reviews.vue'),
             //     meta: { title: 'Pending Reviews' }
             // },
+
+
+
+            {
+                path: 'badges',
+                name: 'facilitator.badges',
+                component: () => import('@/views/BadgeManagement.vue'),
+                meta: { title: 'Badge Management' }
+            },
+            {
+                path: 'rewards',
+                name: 'facilitator.rewards',
+                component: () => import('@/views/RewardManagement.vue'),
+                meta: { title: 'Reward Management' }
+            },
         ]
     },
 
@@ -200,6 +230,19 @@ const authenticatedRoutes = [
             //     component: () => import('@/views/admin/NotificationSettings.vue'),
             //     meta: { title: 'Notification Settings' }
             // },
+
+            {
+                path: 'badges',
+                name: 'admin.badges',
+                component: () => import('@/views/BadgeManagement.vue'),
+                meta: { title: 'Badge Management' }
+            },
+            {
+                path: 'rewards',
+                name: 'admin.rewards',
+                component: () => import('@/views/RewardManagement.vue'),
+                meta: { title: 'Reward Management' }
+            },
         ]
     },
 
