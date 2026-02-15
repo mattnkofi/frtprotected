@@ -12,21 +12,21 @@
                 <div class="relative flex flex-col items-center gap-2">
                     <div class="relative group">
                         <img :src="avatarPreview || profileStore.avatarUrl(200)" alt="Profile Avatar"
-                            class="h-32 w-32 rounded-full object-cover border-4 border-kaitoke-green-100 shadow-lg transition-transform" />
+                            class="h-32 w-32 rounded-full object-cover border-4 border-calm-lavender-100 shadow-lg transition-transform" />
 
                         <div v-if="profileStore.isUploading"
                             class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
                             <div class="text-center">
                                 <div class="text-white text-sm font-medium">{{ profileStore.uploadProgress }}%</div>
                                 <div class="w-16 h-1 bg-gray-300 rounded-full mt-2 overflow-hidden">
-                                    <div class="h-full bg-kaitoke-green-500 transition-all duration-300"
+                                    <div class="h-full bg-calm-lavender-500 transition-all duration-300"
                                         :style="{ width: profileStore.uploadProgress + '%' }"></div>
                                 </div>
                             </div>
                         </div>
 
                         <label v-if="!pendingFile"
-                            class="absolute bottom-0 right-0 bg-kaitoke-green-600 rounded-full p-2 shadow-lg border-2 border-white cursor-pointer hover:bg-kaitoke-green-700 transition-colors"
+                            class="absolute bottom-0 right-0 bg-calm-lavender-600 rounded-full p-2 shadow-lg border-2 border-white cursor-pointer hover:bg-calm-lavender-700 transition-colors"
                             :class="{ 'opacity-50 cursor-not-allowed': profileStore.isUploading }">
                             <CameraIcon class="h-5 w-5 text-white" />
                             <input type="file" class="hidden" accept="image/jpeg,image/png,image/webp"
@@ -60,7 +60,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Display Name</label>
                         <input v-model="profileData.display_name" type="text"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm"
                             placeholder="How others see you" maxlength="100" />
                         <p class="mt-1 text-xs text-gray-500">{{ profileData.display_name?.length || 0 }}/100 characters
                         </p>
@@ -69,7 +69,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Bio</label>
                         <textarea v-model="profileData.bio" rows="3" maxlength="500"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm"
                             placeholder="Tell us about yourself (max 500 characters)"></textarea>
                         <p class="mt-1 text-xs text-gray-500">{{ profileData.bio?.length || 0 }}/500 characters</p>
                     </div>
@@ -88,7 +88,7 @@
                 <div class="sm:col-span-3">
                     <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
                     <input v-model="profileData.date_of_birth" type="date" :max="maxBirthDate"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                     <p v-if="profileData.date_of_birth" class="mt-1 text-xs text-gray-500">Age: {{
                         calculateAge(profileData.date_of_birth) }} years</p>
                 </div>
@@ -96,7 +96,7 @@
                 <div class="sm:col-span-3">
                     <label class="block text-sm font-medium text-gray-700">Sex</label>
                     <select v-model="profileData.sex"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm">
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm">
                         <option value="">Select...</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -107,7 +107,7 @@
                 <div class="sm:col-span-3">
                     <label class="block text-sm font-medium text-gray-700">Gender Identity (Optional)</label>
                     <input v-model="profileData.gender_identity" type="text"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm"
                         placeholder="How you identify" />
                 </div>
 
@@ -115,7 +115,7 @@
                     <label class="block text-sm font-medium text-gray-700">Phone Number</label>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <input v-model="profileData.phone_number" type="text" placeholder="+639XXXXXXXXX"
-                            class="block w-full rounded-md border-gray-300 focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                            class="block w-full rounded-md border-gray-300 focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                     </div>
                     <p class="mt-1 text-xs text-gray-500">Format: +639XXXXXXXXX</p>
                 </div>
@@ -131,27 +131,27 @@
                 <div class="sm:col-span-6">
                     <label class="block text-sm font-medium text-gray-700">Address Line 1</label>
                     <input v-model="profileData.address_line1" type="text"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
                 <div class="sm:col-span-6">
                     <label class="block text-sm font-medium text-gray-700">Address Line 2</label>
                     <input v-model="profileData.address_line2" type="text"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-700">City</label>
                     <input v-model="profileData.city" type="text"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-700">Province</label>
                     <input v-model="profileData.province" type="text"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-gray-700">Postal Code</label>
                     <input v-model="profileData.postal_code" type="text"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-kaitoke-green-500 focus:ring-kaitoke-green-500 sm:text-sm" />
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-calm-lavender-500 focus:ring-calm-lavender-500 sm:text-sm" />
                 </div>
             </div>
         </div>
@@ -163,7 +163,7 @@
                     Reset
                 </button>
                 <button @click="saveProfile" :disabled="isSaving"
-                    class="inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-kaitoke-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-kaitoke-green-700 focus:outline-none focus:ring-2 focus:ring-kaitoke-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-calm-lavender-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-calm-lavender-700 focus:outline-none focus:ring-2 focus:ring-calm-lavender-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <svg v-if="isSaving" class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                         </circle>

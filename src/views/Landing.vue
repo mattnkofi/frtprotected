@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-h-screen bg-gradient-to-br from-platinum-50 via-white to-kaitoke-green-50 dark:from-abyss-900 dark:via-abyss-800 dark:to-abyss-900">
+        class="min-h-screen bg-gradient-to-br from-platinum-50 via-white to-calm-lavender-50 dark:from-abyss-900 dark:via-abyss-800 dark:to-abyss-900">
         <!-- Navigation -->
         <LandingNav />
 

@@ -1,12 +1,11 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router"
-import { useAuthStore } from "@stores/auth"
+import { useAuthStore } from "@/stores/auth" // Fixed @ vs @/ alias consistency
 
-import publicRoutes from "@router/modules/public"
+import publicRoutes from "@/router/modules/public"
 import authenticatedRoutes from "@/router/modules/authenticated"
 
 import { roleGuard } from "./guards/roleGuard"
-// import { permissionGuard } from "./guards/permissionGuard"
 
 const routes = [
     ...publicRoutes,
@@ -14,7 +13,7 @@ const routes = [
     {
         path: "/:pathMatch(.*)*",
         name: "NotFound",
-        component: () => import("@views/NotFound.vue"),
+        component: () => import("@/views/NotFound.vue"),
     },
 ]
 
@@ -30,11 +29,9 @@ const router = createRouter({
 
 /**
  * AUTH + GUEST GUARD
- * - restores session once
- * - handles login/signup redirects
  */
 router.beforeEach(async (to, from, next) => {
-    const auth = useAuthStore()
+    const auth = useAuthStore() // You defined it as 'auth' here
 
     const requiresAuth = to.matched.some(r => r.meta.requiresAuth)
 
@@ -63,17 +60,17 @@ router.beforeEach(async (to, from, next) => {
         (to.name === "login" || to.name === "signup") &&
         isAuthenticated
     ) {
-        const userRole = authStore.user?.role;
+        // FIX: Changed 'authStore' to 'auth' to match the variable definition above
+        const userRole = auth.user?.role; 
 
         // Redirect to appropriate dashboard based on role
         const redirectMap = {
             'admin': { name: 'admin.dashboard' },
             'educator': { name: 'facilitator.dashboard' },
             'moderator': { name: 'facilitator.dashboard' },
-            'player': { name: 'dashboard' }
+            'player': { name: 'user.dashboard' } // Updated to match your learner_pages name
         };
 
-        // return next({ name: "user.dashboard" })
         return next(redirectMap[userRole] || { name: 'home' });
     }
 
@@ -82,17 +79,9 @@ router.beforeEach(async (to, from, next) => {
 
 /**
  * ROLE-BASED GUARD
- * (unchanged, reused as-is)
  */
 router.beforeEach(roleGuard)
 
-/**
- * ORG PERMISSION GUARD
- * (member/admin/permission per org)
- */
-// router.beforeEach(permissionGuard)
-
-// Optional global error handler
 router.onError(error => {
     console.error("Router error:", error)
 })

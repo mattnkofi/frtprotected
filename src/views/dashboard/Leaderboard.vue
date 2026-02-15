@@ -1,7 +1,7 @@
 <template>
     <div class="space-y-6">
         <div class="bg-white dark:bg-abyss-800 rounded-xl p-8 border border-sun-200 dark:border-abyss-700">
-            <router-link :to="{ name: 'user.dashboard' }" class="text-kaitoke-green-600 hover:underline text-sm font-medium mb-4 inline-block">
+            <router-link :to="{ name: 'user.dashboard' }" class="text-calm-lavender-600 hover:underline text-sm font-medium mb-4 inline-block">
                 ← Back to Dashboard
             </router-link>
             
@@ -37,7 +37,7 @@
                             </td>
                             <td class="py-3 px-4">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-kaitoke-green-200 dark:bg-kaitoke-green-800 flex items-center justify-center text-sm font-bold">
+                                    <div class="w-8 h-8 rounded-full bg-calm-lavender-200 dark:bg-calm-lavender-800 flex items-center justify-center text-sm font-bold">
                                         {{ learner.initials || 'U' }}
                                     </div>
                                     <span class="text-abyss-900 dark:text-platinum-100">{{ learner.name }}</span>

@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, onMounted, watchEffect } from 'vue'
+import { ref, computed, onMounted, watchEffect, watch, nextTick } from 'vue'
+import { computePosition, flip, shift, offset } from '@floating-ui/dom'
 import { useRoute, useRouter } from 'vue-router'
 import axios from '@/utils/api'
 import { useAuthStore } from '@/stores/auth'
@@ -37,6 +38,8 @@ const emit = defineEmits(['close-mobile-sidebar', 'expanded-change'])
 
 const expanded = ref(false)
 const profileMenuOpen = ref(false)
+const profileTriggerRef = ref(null)
+const profileDropdownRef = ref(null)
 const width = ref(typeof window !== 'undefined' ? window.innerWidth : 1024)
 const isMobile = computed(() => width.value < 768)
 
@@ -48,6 +51,36 @@ const isHidden = computed(() => mode.value === 'hidden')
 const isMobileShown = computed(() => mode.value === 'mobile-full')
 const isIcon = computed(() => mode.value === 'icon')
 const isFull = computed(() => mode.value === 'full')
+
+const reposition = async () => {
+    if (!profileMenuOpen.value) return
+
+    await nextTick()
+
+    const trigger = profileTriggerRef.value
+    const dropdown = profileDropdownRef.value
+    if (!trigger || !dropdown) return
+
+    const { x, y } = await computePosition(trigger, dropdown, {
+        placement: 'right-start',
+        middleware: [
+            offset(8),
+            flip(),
+            shift({ padding: 8 }),
+        ],
+    })
+
+    Object.assign(dropdown.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+    })
+}
+
+watch(profileMenuOpen, (open) => {
+    if (open) reposition()
+})
+
+
 
 const modules = ref([
     { id: 1, name: 'Gender & Power', icon: 'users2', color: 'text-advocacy-purple-600', progress: 65, status: 'in-progress' },
@@ -75,7 +108,7 @@ function goLeaderboard() {
 }
 
 function goSettings() {
-    router.push({ name: 'settings' })
+    router.push({ name: 'user.settings' })
 }
 
 function goManageBadges() {
@@ -87,7 +120,11 @@ function goModules() {
 }
 
 function goProfile() {
-    router.push({ name: 'user.settings' })
+    router.push({ name: 'user.profile' })
+}
+
+function goStats() {
+    router.push({ name: 'user.stats' })
 }
 
 async function logout() {
@@ -198,6 +235,8 @@ const handleResize = () => {
 
 if (windowExists) {
     window.addEventListener('resize', handleResize)
+
+    window.addEventListener('resize', reposition)
 }
 
 onMounted(() => {
@@ -206,6 +245,8 @@ onMounted(() => {
         loadAll()
         loadReqs()
     }
+
+    window.removeEventListener('resize', reposition)
 })
 
 watchEffect(() => emit('expanded-change', isFull.value))
@@ -234,10 +275,10 @@ watchEffect(() => emit('expanded-change', isFull.value))
                 <span v-if="isFull"
                     class="text-[10px] font-black uppercase tracking-[0.2em] text-platinum-400">Navigation</span>
                 <button @click="expanded = !expanded"
-                    class="p-1.5 rounded-lg bg-platinum-50 dark:bg-abyss-800 hover:scale-110 transition-all border border-transparent hover:border-kaitoke-green-500/50"
+                    class="p-1.5 rounded-lg bg-platinum-50 dark:bg-abyss-800 hover:scale-110 transition-all border border-transparent hover:border-calm-lavender-500/50"
                     :aria-label="isFull ? 'Collapse sidebar' : 'Expand sidebar'">
-                    <ChevronLeft v-if="isFull" class="h-4 w-4 text-kaitoke-green-600" />
-                    <ChevronRight v-else class="h-4 w-4 text-kaitoke-green-600" />
+                    <ChevronLeft v-if="isFull" class="h-4 w-4 text-calm-lavender-600" />
+                    <ChevronRight v-else class="h-4 w-4 text-calm-lavender-600" />
                 </button>
             </div>
 
@@ -245,7 +286,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
 
                 <section class="space-y-2">
                     <div v-if="isFull || isMobileShown"
-                        class="px-3 mb-4 text-[10px] font-bold uppercase tracking-[0.15em] text-kaitoke-green-600 dark:text-kaitoke-green-400 opacity-70">
+                        class="px-3 mb-4 text-[10px] font-bold uppercase tracking-[0.15em] text-calm-lavender-600 dark:text-calm-lavender-400 opacity-70">
                         Active Modules
                     </div>
 
@@ -253,13 +294,13 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <button v-for="module in modules" :key="'module-' + module.id" @click="goModule(module.id)"
                             :title="module.name" :class="[
                                 'group w-full rounded-xl transition-all duration-300 px-3 py-2.5 relative overflow-hidden',
-                                'hover:bg-kaitoke-green-50/50 dark:hover:bg-kaitoke-green-900/10',
+                                'hover:bg-calm-lavender-50/50 dark:hover:bg-calm-lavender-900/10',
                                 route.params.id == module.id
-                                    ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20 shadow-sm'
+                                    ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20 shadow-sm'
                                     : 'transparent'
                             ]">
                             <div v-if="route.params.id == module.id"
-                                class="absolute left-0 top-2 bottom-2 w-1 bg-kaitoke-green-500 rounded-r-full shadow-[0_0_10px_rgba(34,197,94,0.6)]">
+                                class="absolute left-0 top-2 bottom-2 w-1 bg-calm-lavender-500 rounded-r-full shadow-[0_0_10px_rgba(34,197,94,0.6)]">
                             </div>
 
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-between']">
@@ -282,14 +323,14 @@ watchEffect(() => emit('expanded-change', isFull.value))
                                     </div>
                                     <span v-if="!isIcon" :class="[
                                         'truncate font-heading text-sm tracking-wide transition-colors',
-                                        route.params.id == module.id ? 'font-bold text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'font-medium'
+                                        route.params.id == module.id ? 'font-bold text-calm-lavender-700 dark:text-calm-lavender-300' : 'font-medium'
                                     ]">
                                         {{ module.name }}
                                     </span>
                                 </div>
                                 <div v-if="!isIcon && module.progress > 0" class="flex flex-col items-end">
-                                    <span class="text-[10px] font-black text-kaitoke-green-600/70">{{ module.progress
-                                        }}%</span>
+                                    <span class="text-[10px] font-black text-calm-lavender-600/70">{{ module.progress
+                                    }}%</span>
                                 </div>
                             </div>
                         </button>
@@ -306,19 +347,19 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <button v-for="path in myLearningPaths" :key="'path-' + path.id" @click="goPath(path.id)"
                             class="w-full text-left group">
                             <p
-                                class="text-xs font-bold text-abyss-800 dark:text-platinum-200 truncate mb-1.5 group-hover:text-kaitoke-green-500 transition-colors">
+                                class="text-xs font-bold text-abyss-800 dark:text-platinum-200 truncate mb-1.5 group-hover:text-calm-lavender-500 transition-colors">
                                 {{ path.name }}
                             </p>
                             <div
                                 class="relative h-1 w-full bg-platinum-100 dark:bg-abyss-800 rounded-full overflow-hidden">
-                                <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-kaitoke-green-500 to-emerald-400 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(34,197,94,0.4)]"
+                                <div class="absolute inset-y-0 left-0 bg-gradient-to-r from-calm-lavender-500 to-emerald-400 rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(34,197,94,0.4)]"
                                     :style="{ width: path.progress + '%' }"></div>
                             </div>
                         </button>
                     </div>
                     <div v-else class="flex flex-col items-center gap-4">
                         <div v-for="path in myLearningPaths" :key="'p-icon-' + path.id"
-                            class="w-2 h-2 rounded-full bg-kaitoke-green-500/40 border border-kaitoke-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]">
+                            class="w-2 h-2 rounded-full bg-calm-lavender-500/40 border border-calm-lavender-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]">
                         </div>
                     </div>
                 </section>
@@ -326,7 +367,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
                 <section class="pt-4 border-t border-platinum-100 dark:border-abyss-800">
                     <div class="space-y-1">
                         <button @click="goModules()"
-                            :class="['sidebar-btn group', route.name === 'user.modules' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
+                            :class="['sidebar-btn group', route.name === 'user.modules' ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20' : '']">
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
                                 <div
                                     class="p-2 rounded-lg group-hover:bg-advocacy-purple-100 dark:group-hover:bg-advocacy-purple-900/20 transition-colors">
@@ -354,19 +395,39 @@ watchEffect(() => emit('expanded-change', isFull.value))
                             </div>
                         </button>
 
-                        <button @click="goManageBadges()"
-                            :class="['sidebar-btn group', route.name === 'user.managebadges' ? 'bg-kaitoke-green-50 dark:bg-kaitoke-green-900/20' : '']">
+                        <button @click="goStats()"
+                            :class="['sidebar-btn group', route.name === 'user.stats' ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20' : '']">
                             <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
                                 <div
-                                    class="p-2 rounded-lg group-hover:bg-kaitoke-green-100 dark:group-hover:bg-kaitoke-green-900/30 transition-colors">
+                                    class="p-2 rounded-lg group-hover:bg-calm-lavender-100 dark:group-hover:bg-calm-lavender-900/30 transition-colors">
+                                    <svg :class="[
+                                        'h-5 w-5 stroke-[1.75] transition-colors',
+                                        route.name === 'user.stats' ? 'text-calm-lavender-600' : 'text-platinum-500 group-hover:text-calm-lavender-600'
+                                    ]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                </div>
+                                <span v-if="!isIcon" :class="[
+                                    'font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform',
+                                    route.name === 'user.stats' ? 'text-calm-lavender-700 dark:text-calm-lavender-300' : 'text-platinum-600 dark:text-platinum-400'
+                                ]">My Stats</span>
+                            </div>
+                        </button>
+
+                        <button @click="goManageBadges()"
+                            :class="['sidebar-btn group', route.name === 'user.managebadges' ? 'bg-calm-lavender-50 dark:bg-calm-lavender-900/20' : '']">
+                            <div :class="['flex items-center gap-3', isIcon ? 'justify-center' : 'justify-start']">
+                                <div
+                                    class="p-2 rounded-lg group-hover:bg-calm-lavender-100 dark:group-hover:bg-calm-lavender-900/30 transition-colors">
                                     <ShieldCheck :class="[
                                         'h-5 w-5 stroke-[1.75] transition-colors',
-                                        route.name === 'user.managebadges' ? 'text-kaitoke-green-600' : 'text-platinum-500 group-hover:text-kaitoke-green-600'
+                                        route.name === 'user.managebadges' ? 'text-calm-lavender-600' : 'text-platinum-500 group-hover:text-calm-lavender-600'
                                     ]" />
                                 </div>
                                 <span v-if="!isIcon" :class="[
                                     'font-heading text-sm font-semibold group-hover:translate-x-1 transition-transform',
-                                    route.name === 'user.managebadges' ? 'text-kaitoke-green-700 dark:text-kaitoke-green-300' : 'text-platinum-600 dark:text-platinum-400'
+                                    route.name === 'user.managebadges' ? 'text-calm-lavender-700 dark:text-calm-lavender-300' : 'text-platinum-600 dark:text-platinum-400'
                                 ]">Manage Badges</span>
                             </div>
                         </button>
@@ -382,7 +443,7 @@ watchEffect(() => emit('expanded-change', isFull.value))
                         <div class="flex items-center justify-between gap-3">
                             <div class="flex items-center gap-3 min-w-0">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-kaitoke-green-500 to-emerald-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-kaitoke-green-500/20 flex-shrink-0">
+                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-calm-lavender-500 to-emerald-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-calm-lavender-500/20 flex-shrink-0">
                                     {{ getOrgInitials(mine[0]) || 'U' }}
                                 </div>
                                 <div class="flex-1 min-w-0">
@@ -394,40 +455,12 @@ watchEffect(() => emit('expanded-change', isFull.value))
                             </div>
 
                             <!-- Menu button -->
-                            <button @click="profileMenuOpen = !profileMenuOpen"
+                            <button ref="profileTriggerRef" @click="profileMenuOpen = !profileMenuOpen"
                                 class="p-1.5 rounded-lg hover:bg-platinum-200/50 dark:hover:bg-abyss-700 transition-colors flex-shrink-0"
                                 aria-label="Profile menu">
                                 <MoreVertical class="h-4 w-4 stroke-[2] text-platinum-500 dark:text-platinum-400" />
                             </button>
                         </div>
-
-                        <!-- Dropdown menu -->
-                        <transition name="fade">
-                            <div v-if="profileMenuOpen"
-                                class="absolute top-full right-0 mt-1 w-48 bg-white dark:bg-abyss-800 rounded-lg shadow-lg ring-1 ring-black/10 dark:ring-white/10 z-50 overflow-hidden">
-                                <button @click="goProfile(); profileMenuOpen = false"
-                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
-                                    <User
-                                        class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors" />
-                                    <span
-                                        class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">Profile</span>
-                                </button>
-                                <button @click="goSettings(); profileMenuOpen = false"
-                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
-                                    <Settings
-                                        class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-advocacy-purple-600 transition-colors" />
-                                    <span
-                                        class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-advocacy-purple-600 dark:group-hover:text-advocacy-purple-400 transition-colors">Settings</span>
-                                </button>
-                                <button @click="logout(); profileMenuOpen = false"
-                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors group">
-                                    <LogOut
-                                        class="h-4 w-4 stroke-[1.75] text-red-500 group-hover:text-red-600 transition-colors" />
-                                    <span
-                                        class="font-medium text-red-600 dark:text-red-400 group-hover:text-red-700 transition-colors">Logout</span>
-                                </button>
-                            </div>
-                        </transition>
                     </div>
                 </template>
 
@@ -435,25 +468,25 @@ watchEffect(() => emit('expanded-change', isFull.value))
                 <template v-else>
                     <div class="p-3 bg-platinum-50/50 dark:bg-abyss-950/40 relative flex justify-center">
                         <div class="relative">
-                            <button @click="profileMenuOpen = !profileMenuOpen"
+                            <button ref="profileTriggerRef" @click="profileMenuOpen = !profileMenuOpen"
                                 class="flex justify-center p-2 rounded-lg hover:bg-platinum-100 dark:hover:bg-abyss-800 transition-colors"
                                 aria-label="Profile menu">
                                 <div
-                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-kaitoke-green-500 to-emerald-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-kaitoke-green-500/20 hover:shadow-xl hover:scale-110 transition-all">
+                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-calm-lavender-500 to-emerald-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-calm-lavender-500/20 hover:shadow-xl hover:scale-110 transition-all">
                                     {{ getOrgInitials(mine[0]) || 'U' }}
                                 </div>
                             </button>
 
                             <!-- Dropdown menu positioned to the right -->
-                            <transition name="fade">
+                            <!-- <transition name="fade">
                                 <div v-if="profileMenuOpen"
                                     class="absolute top-0 left-full ml-2 w-48 bg-white dark:bg-abyss-800 rounded-lg shadow-lg ring-1 ring-black/10 dark:ring-white/10 z-50 overflow-hidden">
                                     <button @click="goProfile(); profileMenuOpen = false"
                                         class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
                                         <User
-                                            class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-kaitoke-green-600 transition-colors flex-shrink-0" />
+                                            class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-calm-lavender-600 transition-colors flex-shrink-0" />
                                         <span
-                                            class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-kaitoke-green-600 dark:group-hover:text-kaitoke-green-400 transition-colors">Profile</span>
+                                            class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-calm-lavender-600 dark:group-hover:text-calm-lavender-400 transition-colors">Profile</span>
                                     </button>
                                     <button @click="goSettings(); profileMenuOpen = false"
                                         class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
@@ -470,10 +503,41 @@ watchEffect(() => emit('expanded-change', isFull.value))
                                             class="font-medium text-red-600 dark:text-red-400 group-hover:text-red-700 transition-colors">Logout</span>
                                     </button>
                                 </div>
-                            </transition>
+                            </transition> -->
                         </div>
                     </div>
                 </template>
+
+                <!-- Dropdown menu -->
+                <transition name="fade">
+                    <div v-if="profileMenuOpen" ref="profileDropdownRef"
+                        class="fixed z-50 w-48 bg-white dark:bg-abyss-800 rounded-lg shadow-lg ring-1 ring-black/10 dark:ring-white/10 z-50 overflow-hidden">
+                        <button @click="goProfile(); profileMenuOpen = false"
+                            class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
+                            <User
+                                class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-calm-lavender-600 transition-colors" />
+                            <span
+                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-calm-lavender-600 dark:group-hover:text-calm-lavender-400 transition-colors">My
+                                Profile</span>
+                        </button>
+                        <button @click="goSettings(); profileMenuOpen = false"
+                            class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-platinum-50 dark:hover:bg-abyss-700 transition-colors border-b border-platinum-100 dark:border-abyss-700 group">
+                            <Settings
+                                class="h-4 w-4 stroke-[1.75] text-platinum-500 group-hover:text-advocacy-purple-600 transition-colors" />
+                            <span
+                                class="font-medium text-abyss-900 dark:text-platinum-100 group-hover:text-advocacy-purple-600 dark:group-hover:text-advocacy-purple-400 transition-colors">Account
+                                Settings</span>
+                        </button>
+                        <button @click="logout(); profileMenuOpen = false"
+                            class="w-full flex items-center gap-2 px-4 py-2 text-sm text-left hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors group">
+                            <LogOut
+                                class="h-4 w-4 stroke-[1.75] text-red-500 group-hover:text-red-600 transition-colors" />
+                            <span
+                                class="font-medium text-red-600 dark:text-red-400 group-hover:text-red-700 transition-colors">Logout</span>
+                        </button>
+                    </div>
+                </transition>
+
             </div>
         </div>
     </aside>

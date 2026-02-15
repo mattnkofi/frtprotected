@@ -1,8 +1,8 @@
 <!-- src/components/landing/FeatureCard.vue -->
 <template>
     <div class="p-8 rounded-xl bg-white dark:bg-abyss-900 border border-sun-200 dark:border-abyss-700 hover:shadow-lg dark:hover:shadow-abyss-900/50 transition">
-        <div class="w-12 h-12 bg-kaitoke-green-100 dark:bg-kaitoke-green-900/30 rounded-lg flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-kaitoke-green-600" fill="none" stroke="currentColor" :viewBox="viewBox">
+        <div class="w-12 h-12 bg-calm-lavender-100 dark:bg-calm-lavender-900/30 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-calm-lavender-600" fill="none" stroke="currentColor" :viewBox="viewBox">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="icon" />
             </svg>
         </div>
