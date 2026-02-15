@@ -43,6 +43,18 @@ export const facilitatorPages = [
         component: () => import('@/views/ModuleDetail.vue'),
         meta: { title: 'Module' }
     },
+        {
+        path: 'grades',
+        name: 'classroom.manage.grades',
+        component: () => import('@/views/facilitator/GradesManagement.vue')
+    },
+
+        {
+        path: 'channel',
+        name: 'facilitator.channel',
+        component: () => import('@/views/facilitator/ChannelManagement.vue'),
+        meta: { title: 'Channel' }
+    },
     // {
     //     path: 'modules/create',
     //     name: 'facilitator.modules.create',
@@ -62,12 +74,12 @@ export const facilitatorPages = [
     //     meta: { title: 'Teaching Resources' }
     // },
     // Student Monitoring & Intervention
-    // {
-    //     path: 'analytics',
-    //     name: 'facilitator.analytics',
-    //     component: () => import('@/views/facilitator/Analytics.vue'),
-    //     meta: { title: 'Class Analytics' }
-    // },
+    {
+        path: 'leaderboard',
+        name: 'facilitator.leaderboard',
+        component: () => import('@/views/facilitator/Leaderboard.vue'),
+        meta: { title: 'Class Analytics' }
+    },
     // {
     //     path: 'student-logs',
     //     name: 'facilitator.students',

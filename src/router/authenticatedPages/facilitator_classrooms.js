@@ -1,3 +1,4 @@
+// protectEdFrontend\src\router\authenticatedPages\facilitator_classrooms.js
 export const FacilitatorClassrooms = [
 
     {
@@ -22,13 +23,8 @@ export const FacilitatorClassrooms = [
         component: () => import('@/views/facilitator/StudentManagement.vue')
     },
     {
-        path: 'grades',
-        name: 'classroom.manage.grades',
-        component: () => import('@/views/facilitator/GradesManagement.vue')
-    },
-    {
         path: 'analytics',
-        name: 'classroom.manage.analytics',
+        name: 'classroom.analytics',
         component: () => import('@/views/facilitator/ClassroomAnalytics.vue')
     },
     {

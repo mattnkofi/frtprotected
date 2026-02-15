@@ -1,7 +1,8 @@
-// src/router/modules/authenticated.js
+// protectEdFrontend\src\router\modules\authenticated.js
 import AdminDashboardLayout from '@/layouts/AdminDashboardLayout.vue';
 import FacilitatorDashboardLayout from '@/layouts/FacilitatorDashboardLayout.vue';
 import UserDashboardLayout from '@/layouts/UserDashboardLayout.vue';
+import FCDashboardLayout from '@/layouts/FC_DashboardLayout.vue';
 
 const ProfileView = () => import('@/views/Profile.vue');
 const SettingsView = () => import('@/views/Settings.vue');
@@ -39,18 +40,16 @@ const authenticatedRoutes = [
 
     // ===== Facilitator Classroom Routes =====
     {
-        path: '/facilitator/classroom/:id',
-        component: FacilitatorDashboardLayout,
-        meta: { requiresAuth: true, requiresRole: ['educator', 'moderator'] },
-        children: FacilitatorClassrooms
-    },
+        path: '/facilitator/classroom',
+        component: FacilitatorDashboardLayout, // Layer 1: Primary Sidebar + Header
+        children: [
+            {
+                path: ':id',
+                component: FCDashboardLayout, // Layer 2: Secondary Classroom Sidebar
+                children: FacilitatorClassrooms // Layer 3: Management Pages
+            }
+        ]
 
-    // ===== Facilitator Classroom Routes =====
-    {
-        path: '/facilitator/classroom/:id',
-        component: FacilitatorDashboardLayout,
-        meta: { requiresAuth: true, requiresRole: ['educator', 'moderator'] },
-        children: FacilitatorClassrooms
     },
 
 
@@ -66,6 +65,6 @@ const authenticatedRoutes = [
         component: SettingsView,
         meta: { title: 'Settings' }
     },
-]
+];
 
 export default authenticatedRoutes
