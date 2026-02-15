@@ -1,293 +1,217 @@
+<!-- src/views/facilitator/FacilitatorDashboard.vue -->
 <template>
-    <div
-        class="flex h-[calc(100vh-theme(spacing.24))] overflow-hidden bg-platinum-50 dark:bg-abyss-900 rounded-2xl border border-sun-200 dark:border-abyss-700">
-        <!-- Sidebar - Channels & Navigation -->
-        <aside class="w-72 border-r border-sun-200 dark:border-abyss-700 flex flex-col bg-white dark:bg-abyss-800">
-            <!-- Classroom Header -->
-            <div class="p-5 border-b border-sun-100 dark:border-abyss-700">
-                <div class="flex items-start gap-3 mb-3">
-                    <div :class="getThemeColorClass(classroom.themeColor)" class="w-10 h-10 rounded-lg flex-shrink-0">
+    <div class="space-y-6">
+        <!-- Page Header -->
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-abyss-900 dark:text-white">Welcome back, {{ facilitatorName }}!</h1>
+                <p class="text-platinum-600 dark:text-platinum-400 mt-1">Here's what's happening with your students
+                    today</p>
+            </div>
+            <router-link to="/facilitator/modules/create"
+                class="flex items-center gap-2 px-6 py-3 bg-electric-lime-600 hover:bg-electric-lime-700 text-white rounded-lg font-medium transition-colors">
+                <PlusIcon class="h-5 w-5" />
+                <span>Create Module</span>
+            </router-link>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- My Students -->
+            <div
+                class="bg-white dark:bg-abyss-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-abyss-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">My Students</p>
+                        <p class="text-3xl font-bold text-abyss-900 dark:text-white mt-2">{{ stats.totalStudents }}</p>
+                        <p class="text-sm text-green-600 dark:text-green-400 mt-2">
+                            {{ stats.activeStudents }} active today
+                        </p>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <h2 class="font-bold text-abyss-900 dark:text-platinum-50 truncate">{{ classroom.name }}</h2>
-                        <div class="flex items-center gap-2 mt-1">
-                            <Lock v-if="classroom.visibility === 'private'" class="w-3 h-3 text-platinum-500" />
-                            <Globe v-else class="w-3 h-3 text-platinum-500" />
-                            <span class="text-xs text-platinum-500 capitalize">{{ classroom.visibility }}</span>
-                        </div>
+                    <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                        <UsersIcon class="h-8 w-8 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
-                <button @click="showInviteModal = true"
-                    class="w-full py-2 px-3 bg-calm-lavender-600 hover:bg-calm-lavender-700 text-white text-sm font-bold rounded-lg transition flex items-center justify-center gap-2">
-                    <UserPlus class="w-4 h-4" />
-                    Invite Students
-                </button>
             </div>
 
-            <!-- Main Navigation -->
-            <div class="p-3 border-b border-sun-100 dark:border-abyss-700">
-                <nav class="space-y-1">
-                    <router-link :to="{ name: 'classroom.home', params: { id: classroom.id } }"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all"
-                        active-class="bg-calm-lavender-600 text-white"
-                        inactive-class="text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700">
-                        <Home class="w-4 h-4" />
-                        Homepage
-                    </router-link>
-                    <router-link :to="{ name: 'classroom.students', params: { id: classroom.id } }"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all"
-                        active-class="bg-calm-lavender-600 text-white"
-                        inactive-class="text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700">
-                        <Users class="w-4 h-4" />
-                        Students
-                        <span v-if="classroom.pendingRequests > 0"
-                            class="ml-auto px-2 py-0.5 bg-amber-500 text-white text-xs font-bold rounded-full">
-                            {{ classroom.pendingRequests }}
-                        </span>
-                    </router-link>
-                    <router-link :to="{ name: 'classroom.grades', params: { id: classroom.id } }"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all"
-                        active-class="bg-calm-lavender-600 text-white"
-                        inactive-class="text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700">
-                        <GraduationCap class="w-4 h-4" />
-                        Grades
-                    </router-link>
-                    <router-link :to="{ name: 'classroom.analytics', params: { id: classroom.id } }"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all"
-                        active-class="bg-calm-lavender-600 text-white"
-                        inactive-class="text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700">
-                        <BarChart3 class="w-4 h-4" />
-                        Analytics
-                    </router-link>
-                    <router-link :to="{ name: 'classroom.leaderboard', params: { id: classroom.id } }"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all"
-                        active-class="bg-calm-lavender-600 text-white"
-                        inactive-class="text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700">
-                        <Trophy class="w-4 h-4" />
-                        Leaderboard
-                    </router-link>
-                </nav>
-            </div>
-
-            <!-- Channels -->
-            <div class="flex-1 overflow-y-auto p-3">
-                <div class="flex items-center justify-between mb-2 px-1">
-                    <p class="text-xs text-platinum-500 uppercase tracking-widest font-bold">Channels</p>
-                    <button @click="showCreateChannel = true"
-                        class="p-1 hover:bg-platinum-50 dark:hover:bg-abyss-700 rounded transition">
-                        <Plus class="w-4 h-4 text-platinum-500" />
-                    </button>
-                </div>
-                <nav class="space-y-1">
-                    <router-link v-for="channel in channels" :key="channel.id"
-                        :to="{ name: 'classroom.channel', params: { id: classroom.id, channelId: channel.id } }"
-                        class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all group"
-                        active-class="bg-calm-lavender-600 text-white"
-                        inactive-class="text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700">
-                        <Hash class="w-4 h-4 flex-shrink-0" />
-                        <span class="truncate">{{ channel.name }}</span>
-                        <button @click.prevent.stop="editChannel(channel)"
-                            class="ml-auto opacity-0 group-hover:opacity-100 p-1 hover:bg-white/20 rounded transition">
-                            <Settings class="w-3.5 h-3.5" />
-                        </button>
-                    </router-link>
-                </nav>
-            </div>
-
-            <!-- Settings -->
-            <div class="p-3 border-t border-sun-100 dark:border-abyss-700">
-                <router-link :to="{ name: 'classroom.settings', params: { id: classroom.id } }"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700 transition">
-                    <Settings class="w-4 h-4" />
-                    Classroom Settings
-                </router-link>
-            </div>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-white dark:bg-abyss-800">
-            <router-view :classroom="classroom" :channels="channels" />
-        </main>
-
-        <!-- Invite Modal -->
-        <Transition name="modal-fade">
-            <div v-if="showInviteModal"
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-abyss-900/60 backdrop-blur-sm">
-                <div @click.stop
-                    class="bg-white dark:bg-abyss-800 rounded-2xl w-full max-w-md overflow-hidden border border-sun-200 dark:border-abyss-700 shadow-2xl">
-                    <div class="p-6 border-b border-sun-100 dark:border-abyss-700 flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-abyss-900 dark:text-platinum-50">Invite Students</h2>
-                        <button @click="showInviteModal = false"
-                            class="p-2 hover:bg-platinum-50 dark:hover:bg-abyss-700 rounded-lg transition">
-                            <X class="w-5 h-5 text-platinum-500" />
-                        </button>
+            <!-- My Modules -->
+            <div
+                class="bg-white dark:bg-abyss-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-abyss-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">My Modules</p>
+                        <p class="text-3xl font-bold text-abyss-900 dark:text-white mt-2">{{ stats.myModules }}</p>
+                        <p class="text-sm text-purple-600 dark:text-purple-400 mt-2">
+                            {{ stats.publishedModules }} published
+                        </p>
                     </div>
-                    <div class="p-6 space-y-4">
-                        <div>
-                            <label
-                                class="text-xs font-bold text-platinum-500 uppercase tracking-widest mb-2 block">Invite
-                                Link</label>
-                            <div class="flex gap-2">
-                                <input :value="inviteLink" readonly
-                                    class="flex-1 px-3 py-2 bg-platinum-50 dark:bg-abyss-900 border border-sun-200 dark:border-abyss-700 rounded-lg text-sm dark:text-white" />
-                                <button @click="copyInviteLink"
-                                    class="px-4 py-2 bg-calm-lavender-600 hover:bg-calm-lavender-700 text-white rounded-lg text-sm font-medium transition">
-                                    <Copy class="w-4 h-4" />
-                                </button>
+                    <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                        <BookOpenIcon class="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completion Rate -->
+            <div
+                class="bg-white dark:bg-abyss-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-abyss-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Completion Rate</p>
+                        <p class="text-3xl font-bold text-abyss-900 dark:text-white mt-2">{{ stats.completionRate }}%
+                        </p>
+                        <p class="text-sm text-green-600 dark:text-green-400 mt-2">
+                            +{{ stats.completionGrowth }}% from last month
+                        </p>
+                    </div>
+                    <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                        <TrendingUpIcon class="h-8 w-8 text-green-600 dark:text-green-400" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Reviews -->
+            <div
+                class="bg-white dark:bg-abyss-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-abyss-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Pending Reviews</p>
+                        <p class="text-3xl font-bold text-abyss-900 dark:text-white mt-2">{{ stats.pendingReviews }}</p>
+                        <router-link to="/facilitator/reviews"
+                            class="text-sm text-orange-600 dark:text-orange-400 mt-2 inline-block hover:underline">
+                            Review now →
+                        </router-link>
+                    </div>
+                    <div class="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                        <ClipboardCheckIcon class="h-8 w-8 text-orange-600 dark:text-orange-400" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Recent Student Activity -->
+            <div
+                class="lg:col-span-2 bg-white dark:bg-abyss-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-abyss-700">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-abyss-900 dark:text-white">Recent Student Activity</h3>
+                    <router-link to="/facilitator/students"
+                        class="text-sm text-electric-lime-600 hover:text-electric-lime-700 font-medium">
+                        View All →
+                    </router-link>
+                </div>
+                <div class="space-y-4">
+                    <div v-for="activity in studentActivity" :key="activity.id"
+                        class="flex items-center justify-between p-4 bg-gray-50 dark:bg-abyss-900 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <img :src="activity.avatar" :alt="activity.name"
+                                class="h-10 w-10 rounded-full object-cover" />
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ activity.name }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ activity.action }}</p>
                             </div>
                         </div>
-                        <div>
-                            <label class="text-xs font-bold text-platinum-500 uppercase tracking-widest mb-2 block">Or
-                                Invite by Email</label>
-                            <div class="flex gap-2">
-                                <input v-model="inviteEmail" type="email" placeholder="student@example.com"
-                                    class="flex-1 px-3 py-2 bg-platinum-50 dark:bg-abyss-900 border border-sun-200 dark:border-abyss-700 rounded-lg text-sm dark:text-white outline-none focus:ring-2 focus:ring-calm-lavender-500" />
-                                <button @click="sendInviteEmail"
-                                    class="px-4 py-2 bg-calm-lavender-600 hover:bg-calm-lavender-700 text-white rounded-lg text-sm font-medium transition">
-                                    Send
-                                </button>
-                            </div>
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ activity.score }}%</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ activity.time }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </Transition>
 
-        <!-- Create Channel Modal -->
-        <Transition name="modal-fade">
-            <div v-if="showCreateChannel"
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-abyss-900/60 backdrop-blur-sm">
-                <div @click.stop
-                    class="bg-white dark:bg-abyss-800 rounded-2xl w-full max-w-md overflow-hidden border border-sun-200 dark:border-abyss-700 shadow-2xl">
-                    <div class="p-6 border-b border-sun-100 dark:border-abyss-700 flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-abyss-900 dark:text-platinum-50">Create Channel</h2>
-                        <button @click="showCreateChannel = false"
-                            class="p-2 hover:bg-platinum-50 dark:hover:bg-abyss-700 rounded-lg transition">
-                            <X class="w-5 h-5 text-platinum-500" />
-                        </button>
-                    </div>
-                    <form @submit.prevent="createChannel" class="p-6 space-y-4">
-                        <div>
-                            <label
-                                class="text-xs font-bold text-platinum-500 uppercase tracking-widest mb-2 block">Channel
-                                Name</label>
-                            <input v-model="newChannel.name" type="text" placeholder="e.g. module-1"
-                                class="w-full px-3 py-2 bg-platinum-50 dark:bg-abyss-900 border border-sun-200 dark:border-abyss-700 rounded-lg text-sm dark:text-white outline-none focus:ring-2 focus:ring-calm-lavender-500" />
+            <!-- Quick Links -->
+            <div
+                class="bg-white dark:bg-abyss-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-abyss-700">
+                <h3 class="text-lg font-semibold text-abyss-900 dark:text-white mb-4">Quick Actions</h3>
+                <div class="space-y-3">
+                    <router-link to="/facilitator/modules/create"
+                        class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-abyss-900 transition-colors">
+                        <div class="p-2 bg-electric-lime-100 dark:bg-electric-lime-900/30 rounded-lg">
+                            <PlusIcon class="h-5 w-5 text-electric-lime-600 dark:text-electric-lime-400" />
                         </div>
-                        <div>
-                            <label
-                                class="text-xs font-bold text-platinum-500 uppercase tracking-widest mb-2 block">Description</label>
-                            <textarea v-model="newChannel.description" rows="3"
-                                placeholder="Brief description of this channel..."
-                                class="w-full px-3 py-2 bg-platinum-50 dark:bg-abyss-900 border border-sun-200 dark:border-abyss-700 rounded-lg text-sm dark:text-white outline-none focus:ring-2 focus:ring-calm-lavender-500 resize-none"></textarea>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Create New Module</span>
+                    </router-link>
+
+                    <router-link to="/facilitator/students"
+                        class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-abyss-900 transition-colors">
+                        <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                            <UsersIcon class="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         </div>
-                        <div class="flex gap-3">
-                            <button type="button" @click="showCreateChannel = false"
-                                class="flex-1 px-4 py-2 text-sm font-medium text-platinum-600 dark:text-platinum-400 hover:bg-platinum-50 dark:hover:bg-abyss-700 rounded-lg transition">
-                                Cancel
-                            </button>
-                            <button type="submit"
-                                class="flex-1 px-4 py-2 bg-calm-lavender-600 hover:bg-calm-lavender-700 text-white text-sm font-medium rounded-lg transition">
-                                Create
-                            </button>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">View Students</span>
+                    </router-link>
+
+                    <router-link to="/facilitator/classroom/:id/analytics"
+                        class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-abyss-900 transition-colors">
+                        <div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                            <LineChartIcon class="h-5 w-5 text-purple-600 dark:text-purple-400" />
                         </div>
-                    </form>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">View Analytics</span>
+                    </router-link>
+
+                    <router-link to="/facilitator/resources"
+                        class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-abyss-900 transition-colors">
+                        <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                            <FolderIcon class="h-5 w-5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Teaching Resources</span>
+                    </router-link>
                 </div>
             </div>
-        </Transition>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 import {
-    Home, Users, GraduationCap, BarChart3, Trophy, Settings, Hash, Plus,
-    UserPlus, Copy, X, Lock, Globe, Edit
-} from 'lucide-vue-next'
+    PlusIcon,
+    UsersIcon,
+    BookOpenIcon,
+    TrendingUpIcon,
+    ClipboardCheckIcon,
+    LineChartIcon,
+    FolderIcon
+} from 'lucide-vue-next';
 
-const route = useRoute()
-const showInviteModal = ref(false)
-const showCreateChannel = ref(false)
-const inviteEmail = ref('')
+const authStore = useAuthStore();
 
-// Mock classroom data
-const classroom = ref({
-    id: parseInt(route.params.id),
-    name: 'Gender & Development 101',
-    description: 'Comprehensive introduction to gender equality and VAWC prevention',
-    visibility: 'public',
-    themeColor: 'lavender',
-    pendingRequests: 3,
-    studentCount: 45
-})
+const facilitatorName = computed(() => authStore.user?.name?.split(' ')[0] || 'Facilitator');
 
-const channels = ref([
-    { id: 1, name: 'general', description: 'General announcements and discussions' },
-    { id: 2, name: 'module-1', description: 'Introduction to Gender Equality' },
-    { id: 3, name: 'module-2', description: 'Understanding VAWC' },
-    { id: 4, name: 'resources', description: 'Additional learning materials' }
-])
+const stats = ref({
+    totalStudents: 87,
+    activeStudents: 34,
+    myModules: 23,
+    publishedModules: 19,
+    completionRate: 76,
+    completionGrowth: 8,
+    pendingReviews: 12
+});
 
-const newChannel = ref({
-    name: '',
-    description: ''
-})
-
-const inviteLink = computed(() => {
-    return `https://protected.app/join/${classroom.value.id}/abc123xyz`
-})
-
-const getThemeColorClass = (color) => {
-    const colorMap = {
-        lavender: 'bg-calm-lavender-600',
-        azure: 'bg-azure-blue-500',
-        pink: 'bg-neon-pink-500',
-        emerald: 'bg-emerald-500',
-        amber: 'bg-amber-500',
-        rose: 'bg-rose-500',
-        violet: 'bg-violet-600',
-        teal: 'bg-teal-500'
+const studentActivity = ref([
+    {
+        id: 1,
+        name: 'Maria Santos',
+        action: 'Completed "Understanding VAWC"',
+        score: 95,
+        time: '10 minutes ago',
+        avatar: 'https://ui-avatars.com/api/?name=Maria+Santos&background=059669&color=fff'
+    },
+    {
+        id: 2,
+        name: 'Juan Dela Cruz',
+        action: 'Started "Gender Equality Basics"',
+        score: 0,
+        time: '30 minutes ago',
+        avatar: 'https://ui-avatars.com/api/?name=Juan+Dela+Cruz&background=3b82f6&color=fff'
+    },
+    {
+        id: 3,
+        name: 'Ana Reyes',
+        action: 'Completed Quiz on GAD',
+        score: 88,
+        time: '1 hour ago',
+        avatar: 'https://ui-avatars.com/api/?name=Ana+Reyes&background=a855f7&color=fff'
     }
-    return colorMap[color] || 'bg-calm-lavender-600'
-}
-
-const copyInviteLink = () => {
-    navigator.clipboard.writeText(inviteLink.value)
-    console.log('Invite link copied!')
-}
-
-const sendInviteEmail = () => {
-    if (inviteEmail.value) {
-        console.log('Sending invite to:', inviteEmail.value)
-        inviteEmail.value = ''
-    }
-}
-
-const createChannel = () => {
-    if (newChannel.value.name) {
-        channels.value.push({
-            id: channels.value.length + 1,
-            ...newChannel.value
-        })
-        newChannel.value = { name: '', description: '' }
-        showCreateChannel.value = false
-    }
-}
-
-const editChannel = (channel) => {
-    console.log('Editing channel:', channel.name)
-}
+]);
 </script>
-
-<style scoped>
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-    transition: opacity 0.2s ease;
-}
-
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-    opacity: 0;
-}
-</style>

@@ -112,16 +112,22 @@ watch(() => route.path, () => {
                 </template>
             </SidebarNavItem>
 
+            <SidebarNavItem to="/facilitator/grades" :title="sidebarStore.isExpanded ? 'Manage Grade' : ''">
+                <template #icon>
+                    <BookOpenIcon class="h-5 w-5" />
+                </template>
+            </SidebarNavItem>
+
             <SidebarNavDropdown :label="sidebarStore.isExpanded ? 'Modules' : ''"
                 :is-collapsed="!sidebarStore.isExpanded" :match-paths="['/facilitator/modules']">
                 <template #icon>
                     <BookOpenIcon class="h-5 w-5" />
                 </template>
                 <SidebarNavItem v-if="sidebarStore.isExpanded" to="/facilitator/modules" title="All Modules" />
-                <SidebarNavItem v-if="sidebarStore.isExpanded" to="/facilitator/modules/create" title="Create Module" />
+                <SidebarNavItem v-if="sidebarStore.isExpanded" to="/facilitator/channel" title="Channel Management" />
             </SidebarNavDropdown>
 
-            <SidebarNavItem to="/facilitator/analytics" :title="sidebarStore.isExpanded ? 'Analytics' : ''">
+            <SidebarNavItem to="/facilitator/leaderboard" :title="sidebarStore.isExpanded ? 'Leaderboard' : ''">
                 <template #icon>
                     <LineChartIcon class="h-5 w-5" />
                 </template>
